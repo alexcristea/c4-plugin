@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Shellcheck scripts/
+        run: shellcheck scripts/*.sh
+
+      - name: Shellcheck templates/
+        run: shellcheck templates/workspace/bin/local/run.sh
+
+      - name: Validate plugin manifest
+        run: |
+          python3 - <<'PY'
+          import json
+          data = json.load(open('.claude-plugin/plugin.json'))
+          for k in ('name', 'version', 'description'):
+              assert k in data, f"plugin.json missing {k!r}"
+          print(f"ok: plugin.json ({data['name']} v{data['version']})")
+          PY
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys, re
+          required = {'name', 'description', 'allowed-tools'}
+          failures = []
+          for skill_file in pathlib.Path('skills').glob('*/SKILL.md'):
+              text = skill_file.read_text()
+              m = re.match(r'^---\n(.*?)\n---', text, re.DOTALL)
+              if not m:
+                  failures.append(f"{skill_file}: no frontmatter")
+                  continue
+              keys = set(re.findall(r'^([a-zA-Z_-]+):', m.group(1), re.MULTILINE))
+              missing = required - keys
+              if missing:
+                  failures.append(f"{skill_file}: missing {sorted(missing)}")
+              else:
+                  print(f"ok: {skill_file}")
+          if failures:
+              for f in failures:
+                  print(f"FAIL: {f}", file=sys.stderr)
+              sys.exit(1)
+          PY
+
+  references:
+    name: References sanity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Every reference has a # Source footer with a URL
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          failures = []
+          for ref in pathlib.Path('references').glob('*.md'):
+              text = ref.read_text()
+              if '# Source' not in text:
+                  failures.append(f"{ref}: missing '# Source' footer")
+                  continue
+              footer = text.split('# Source', 1)[1]
+              if not re.search(r'https?://\S+', footer):
+                  failures.append(f"{ref}: '# Source' footer has no URL")
+              else:
+                  print(f"ok: {ref}")
+          if failures:
+              for f in failures:
+                  print(f"FAIL: {f}", file=sys.stderr)
+              sys.exit(1)
+          PY
+
+  smoke:
+    name: Smoke (validate examples)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull structurizr image
+        run: docker pull structurizr/structurizr
+
+      - name: Validate simple-web-app example
+        run: scripts/validate-dsl.sh examples/simple-web-app/workspace.dsl
+
+      - name: Validate microservices example
+        run: scripts/validate-dsl.sh examples/microservices/workspace.dsl
+
+  e2e:
+    name: End-to-end (init → validate → export → preview)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull structurizr image
+        run: docker pull structurizr/structurizr
+
+      - name: Run tests/smoke.sh
+        run: tests/smoke.sh

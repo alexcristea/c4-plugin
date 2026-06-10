@@ -1,0 +1,20 @@
+{
+  "name": "c4",
+  "version": "0.1.0",
+  "description": "Author C4 architecture diagrams as Structurizr DSL, with ADRs and supplementary docs.",
+  "author": {
+    "name": "Alex Cristea"
+  },
+  "homepage": "https://github.com/alexcristea/c4-plugin",
+  "repository": "https://github.com/alexcristea/c4-plugin",
+  "license": "MIT",
+  "keywords": [
+    "c4",
+    "architecture",
+    "structurizr",
+    "dsl",
+    "diagrams",
+    "adr",
+    "documentation"
+  ]
+}
