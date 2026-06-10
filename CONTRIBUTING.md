@@ -12,14 +12,14 @@ c4-plugin/                       # this repo — a standalone Claude Code plugin
 ├── references/                  # curated Structurizr DSL docs, loaded by skills on demand
 ├── scripts/                     # shared shell tools called from skills
 ├── skills/                      # one directory per skill, each with a SKILL.md
-│   ├── init/
+│   ├── structurize/
 │   ├── update/
 │   ├── validate/
 │   ├── export/
 │   ├── preview/
 │   └── conventions/
 ├── templates/
-│   └── workspace/               # single template tree; /c4:init copies it to . or architecture/
+│   └── workspace/               # single template tree; /c4:structurize copies it to . or architecture/
 ├── examples/                    # end-to-end workspaces for manual testing
 ├── tests/
 │   └── smoke.sh                 # shell-level end-to-end test (no Claude required)
@@ -39,7 +39,7 @@ cd c4-plugin
 
 ### 2. Install the plugin in Claude Code
 
-In a scratch Claude Code session (i.e. **not** inside this repo — make a separate sandbox directory so you can exercise `/c4:init`):
+In a scratch Claude Code session (i.e. **not** inside this repo — make a separate sandbox directory so you can exercise `/c4:structurize`):
 
 ```
 /plugin install --plugin-dir /absolute/path/to/c4-plugin
@@ -60,7 +60,7 @@ You don't need to reload when editing `references/*.md` — they're read fresh o
 Inside an empty scratch directory:
 
 ```
-/c4:init
+/c4:structurize
 /c4:update "add a Postgres database and connect it to the API"
 /c4:validate
 /c4:export plantuml
@@ -104,7 +104,7 @@ Use `${CLAUDE_PLUGIN_ROOT}/references/<file>.md` to access bundled grammar docs.
 
 | Field           | Required | Meaning                                                                                                  |
 |-----------------|----------|----------------------------------------------------------------------------------------------------------|
-| `name`          | yes      | Skill name (lowercase, no spaces). Combined with the plugin name from `.claude-plugin/plugin.json` to form the slash command (e.g. plugin `c4` + skill `init` → `/c4:init`). |
+| `name`          | yes      | Skill name (lowercase, no spaces). Combined with the plugin name from `.claude-plugin/plugin.json` to form the slash command (e.g. plugin `c4` + skill `structurize` → `/c4:structurize`). |
 | `description`   | yes      | One sentence, active voice, under 200 characters. Used by Claude to decide whether to invoke the skill.   |
 | `allowed-tools` | yes      | Comma-separated list. Use `Bash(scripts/<file>:*)` to grant access to a specific script.                 |
 | `paths`         | no       | Glob(s) that trigger automatic loading. Use only for non-invocable skills like `conventions`.            |
@@ -175,7 +175,7 @@ For changes that affect skill instructions, reference content, or conventions, r
 
 In an empty scratch directory, with the plugin installed:
 
-- [ ] `/c4:init` produces the standalone layout; `workspace.dsl` validates clean.
+- [ ] `/c4:structurize` produces the standalone layout; `workspace.dsl` validates clean.
 - [ ] `/c4:update "add a Postgres database called orders-db and connect the API to it"` — workspace.dsl gains a `Container` with technology `Postgres`, a relationship with present-tense verb, and validates clean.
 - [ ] `/c4:update "add a System Context view keyed 'Overview'"` — view is added with an explicit key; auto-validate passes.
 - [ ] `/c4:update "record an ADR about choosing Kafka over RabbitMQ"` — file appears as `adrs/000N-...-kafka...md` (4-digit prefix) with the next sequential number, Nygard sections present, Status `Proposed` or `Accepted`.
@@ -186,7 +186,7 @@ In an empty scratch directory, with the plugin installed:
 
 In a sibling scratch directory containing a small existing project (e.g. a `Dockerfile` + `package.json`):
 
-- [ ] `/c4:init` chooses embedded mode and creates `architecture/`.
+- [ ] `/c4:structurize` chooses embedded mode and creates `architecture/`.
 - [ ] `/c4:update --discover "model this codebase as C4"` — agent inspects manifests, proposes a model, then writes `architecture/workspace.dsl` that validates clean.
 
 Skipping a checkbox is fine if the change is unrelated; note which boxes you skipped and why.
@@ -216,8 +216,8 @@ Skipping a checkbox is fine if the change is unrelated; note which boxes you ski
 
 ### Templates
 
-- Use `{{PROJECT_NAME}}` and `{{TODAY}}` placeholders. The `init` skill replaces them at copy time.
-- A freshly-`init`ed workspace must immediately pass `/c4:validate`.
+- Use `{{PROJECT_NAME}}` and `{{TODAY}}` placeholders. The `structurize` skill replaces them at copy time.
+- A freshly-scaffolded workspace must immediately pass `/c4:validate`.
 
 ## Filing issues
 

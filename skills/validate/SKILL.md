@@ -17,7 +17,7 @@ The `update` skill already auto-validates after every edit — only invoke `vali
 
 ## Workflow
 
-1. **Locate workspace.dsl.** Search root, then `architecture/`. If none, tell the user and suggest `/c4:init`.
+1. **Locate workspace.dsl.** Search root, then `architecture/`. If none, tell the user and suggest `/c4:structurize`.
 2. **Run the script:**
 
    ```

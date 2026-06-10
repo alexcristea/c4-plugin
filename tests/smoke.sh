@@ -4,7 +4,7 @@
 #
 # What it tests
 # -------------
-# Simulates what /c4:init does (copy template + placeholder substitution), then
+# Simulates what /c4:structurize does (copy template + placeholder substitution), then
 # exercises validate, export, and preview against the seeded workspace — in both
 # standalone and embedded layouts. Catches template corruption, placeholder bugs,
 # script regressions, and Docker-side problems without involving Claude itself.

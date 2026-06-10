@@ -23,7 +23,7 @@ A single editing skill for **any** change to the C4 workspace: model, views, rel
 
 ## Workflow
 
-1. **Locate the workspace.** Look for `workspace.dsl` at the repo root, then under `architecture/`. If neither exists, suggest running `/c4:init` first.
+1. **Locate the workspace.** Look for `workspace.dsl` at the repo root, then under `architecture/`. If neither exists, suggest running `/c4:structurize` first.
 2. **Identify what to edit.** Match the request to one of:
    - Model elements → `model { ... }` block
    - Relationships → use `->` inside the relevant scope

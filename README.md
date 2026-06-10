@@ -6,21 +6,21 @@ You describe the change in plain English; Claude edits `workspace.dsl`, validate
 
 ## What this plugin gives you
 
-| Skill           | Purpose                                                                                  |
-|-----------------|------------------------------------------------------------------------------------------|
-| `/c4:init`         | Scaffold a new workspace — standalone repo, or `architecture/` inside an existing one.   |
-| `/c4:update`       | Make any change to the model, views, styles, deployment, ADRs, or docs. Auto-validates.  |
-| `/c4:validate`     | Run `structurizr/structurizr validate` on demand.                                        |
-| `/c4:export`       | Render the workspace to PlantUML, Mermaid, JSON, or a browsable static HTML site.        |
-| `/c4:preview`      | Start Structurizr Local at `http://localhost:8080` for live in-browser preview.          |
-| `conventions`   | Auto-loaded when editing `.dsl`, `adrs/**`, or `docs/**`. Not user-invocable.            |
+| Skill             | Purpose                                                                                  |
+|-------------------|------------------------------------------------------------------------------------------|
+| `/c4:structurize` | Scaffold a new workspace — standalone repo, or `architecture/` inside an existing one.   |
+| `/c4:update`      | Make any change to the model, views, styles, deployment, ADRs, or docs. Auto-validates.  |
+| `/c4:validate`    | Run `structurizr/structurizr validate` on demand.                                        |
+| `/c4:export`      | Render the workspace to PlantUML, Mermaid, JSON, or a browsable static HTML site.        |
+| `/c4:preview`     | Start Structurizr Local at `http://localhost:8080` for live in-browser preview.          |
+| `conventions`     | Auto-loaded when editing `.dsl`, `adrs/**`, or `docs/**`. Not user-invocable.            |
 
 All skills share a curated set of Structurizr DSL references bundled at the plugin root — no network roundtrips, no truncation.
 
 ## Prerequisites
 
 - [Claude Code](https://docs.claude.com/claude-code) installed.
-- [Docker](https://docs.docker.com/get-docker/) — required only for `/c4:validate`, `/c4:export`, and `/c4:preview`. `/c4:init` and `/c4:update` (without auto-validate) work without it.
+- [Docker](https://docs.docker.com/get-docker/) — required only for `/c4:validate`, `/c4:export`, and `/c4:preview`. `/c4:structurize` and `/c4:update` (without auto-validate) work without it.
 
 ## Install
 
@@ -58,7 +58,7 @@ In a Claude Code session:
 In an empty directory:
 
 ```
-/c4:init
+/c4:structurize
 /c4:update "we have a Next.js web app talking to a Node.js API talking to Postgres"
 /c4:preview
 ```
@@ -73,31 +73,31 @@ Open `http://localhost:8080` — your diagram is rendered and updates as you edi
 
 Start in an empty directory:
 
-| Slash command                                                                                          | Or just say…                                                          |
-|--------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| `/c4:init`                                                                                                | "set up C4 in this empty directory"                                   |
-| `/c4:update "add a person 'Customer' who uses our system"`                                                | "add a person 'Customer' who uses our system"                         |
+| Slash command                                                                                                    | Or just say…                                                          |
+|------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| `/c4:structurize`                                                                                                | "set up C4 in this empty directory"                                   |
+| `/c4:update "add a person 'Customer' who uses our system"`                                                       | "add a person 'Customer' who uses our system"                         |
 | `/c4:update "add three containers: a Next.js storefront, a Go catalog service, and a Postgres catalog database"` | "add three containers: a Next.js storefront, a Go catalog service, and a Postgres catalog database" |
-| `/c4:update "add a container view named 'Storefront' showing how requests flow through the system"`      | "add a container view named 'Storefront' showing how requests flow through the system" |
+| `/c4:update "add a container view named 'Storefront' showing how requests flow through the system"`              | "add a container view named 'Storefront' showing how requests flow through the system" |
 
 ### Brownfield: reverse-engineer an existing repo
 
 In an existing project directory:
 
-| Slash command                                                                                                       | Or just say…                                                                          |
-|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| `/c4:init`                                                                                                             | "add a C4 architecture model to this project" → triggers embedded mode                |
-| `/c4:update --discover "model this codebase as C4 — scan Dockerfiles, package.json, k8s/, and routes/"`                | "model this codebase as C4 — scan Dockerfiles, package.json, k8s/, and routes/"       |
+| Slash command                                                                                                  | Or just say…                                                                          |
+|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `/c4:structurize`                                                                                              | "add a C4 architecture model to this project" → triggers embedded mode                |
+| `/c4:update --discover "model this codebase as C4 — scan Dockerfiles, package.json, k8s/, and routes/"`        | "model this codebase as C4 — scan Dockerfiles, package.json, k8s/, and routes/"       |
 
 Claude scans manifests, infra config, and routing, proposes a model, then writes `architecture/workspace.dsl` after you confirm.
 
 ### Documentation-first: ADRs and supplementary docs alongside the model
 
-| Slash command                                                                                                  | Or just say…                                                                  |
-|----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| `/c4:update "record an ADR titled 'Adopt Kafka for cross-service events'"`                                        | "record an ADR titled 'Adopt Kafka for cross-service events'"                 |
-| `/c4:update "supersede ADR 003 with a new ADR introducing CQRS for the orders service"`                           | "supersede ADR 003 with a new ADR introducing CQRS for the orders service"    |
-| `/c4:update "fill in docs/0002-actors.md with the four roles we discussed"`                                       | "fill in docs/0002-actors.md with the four roles we discussed"                |
+| Slash command                                                                                                 | Or just say…                                                                  |
+|---------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `/c4:update "record an ADR titled 'Adopt Kafka for cross-service events'"`                                    | "record an ADR titled 'Adopt Kafka for cross-service events'"                 |
+| `/c4:update "supersede ADR 003 with a new ADR introducing CQRS for the orders service"`                       | "supersede ADR 003 with a new ADR introducing CQRS for the orders service"    |
+| `/c4:update "fill in docs/0002-actors.md with the four roles we discussed"`                                   | "fill in docs/0002-actors.md with the four roles we discussed"                |
 
 ADRs follow the Michael Nygard format and live in `adrs/` (or `architecture/adrs/`).
 
@@ -105,12 +105,12 @@ ADRs follow the Michael Nygard format and live in `adrs/` (or `architecture/adrs
 
 A complete inventory of what each skill handles. Every row shows two ways to invoke the same thing: the explicit **slash command**, and the **natural-language** phrase Claude will route to the same skill. Use whichever feels natural. Legend: ✅ covered · ⚠️ partial (see note) · ❌ not covered (workaround in note).
 
-### `/c4:init` — bootstrap a workspace
+### `/c4:structurize` — bootstrap a workspace
 
-| Use case                                       | Status | Slash command | Or just say…                                                |
-|------------------------------------------------|:------:|---------------|-------------------------------------------------------------|
-| Set up a new architecture repo                 | ✅     | `/c4:init`       | "set up C4 in this empty directory"                         |
-| Add C4 architecture to my existing project     | ✅     | `/c4:init`       | "add a C4 architecture model to this project"               |
+| Use case                                       | Status | Slash command             | Or just say…                                                |
+|------------------------------------------------|:------:|---------------------------|-------------------------------------------------------------|
+| Set up a new architecture repo                 | ✅     | `/c4:structurize`         | "set up C4 in this empty directory"                         |
+| Add C4 architecture to my existing project     | ✅     | `/c4:structurize`         | "add a C4 architecture model to this project"               |
 
 ### `/c4:update` — all editing
 
@@ -220,7 +220,7 @@ Render either example via `scripts/preview-start.sh` from inside its directory.
 
 ## Workspace layout
 
-`/c4:init` creates one of two layouts depending on whether the cwd is empty:
+`/c4:structurize` creates one of two layouts depending on whether the cwd is empty:
 
 **Standalone** (empty cwd or you say "new repo"):
 
@@ -250,18 +250,18 @@ architecture/
 └── bin/local/run.sh        # convenience preview launcher
 ```
 
-`/c4:init` will **never** run `git init` and will **never** commit. You decide when to version-control the result.
+`/c4:structurize` will **never** run `git init` and will **never** commit. You decide when to version-control the result.
 
 ## Troubleshooting
 
-| Symptom                                                                | Cause / fix                                                                                       |
-|------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| `error: docker is not installed`                                       | Install Docker Desktop or the Engine. Required for `/c4:validate`, `/c4:export`, `/c4:preview` only.       |
-| `error: docker daemon is not running`                                  | Start Docker. On macOS, open Docker Desktop.                                                      |
-| Port 8080 already in use                                               | `C4_PREVIEW_PORT=8081 /c4:preview` (or run `scripts/preview-stop.sh` to remove a stale container).      |
-| Validation says "Software with name ... already exists"                | Two `softwareSystem`s share a name. Names must be unique — see `references/basics.md`.            |
-| Container view is empty                                                | Add `include *` (or specific identifiers) inside the view block. See `references/views.md`.       |
-| `/c4:update` keeps failing validation                                     | The skill self-corrects up to 3 attempts. Beyond that, run `/c4:validate` to see the raw error.       |
+| Symptom                                                  | Cause / fix                                                                                       |
+|----------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `error: docker is not installed`                         | Install Docker Desktop or the Engine. Required for `/c4:validate`, `/c4:export`, `/c4:preview` only.       |
+| `error: docker daemon is not running`                    | Start Docker. On macOS, open Docker Desktop.                                                      |
+| Port 8080 already in use                                 | `C4_PREVIEW_PORT=8081 /c4:preview` (or run `scripts/preview-stop.sh` to remove a stale container).      |
+| Validation says "Software with name ... already exists"  | Two `softwareSystem`s share a name. Names must be unique — see `references/basics.md`.            |
+| Container view is empty                                  | Add `include *` (or specific identifiers) inside the view block. See `references/views.md`.       |
+| `/c4:update` keeps failing validation                    | The skill self-corrects up to 3 attempts. Beyond that, run `/c4:validate` to see the raw error.       |
 
 ## How it works
 

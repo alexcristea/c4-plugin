@@ -1,16 +1,16 @@
 ---
-name: init
+name: structurize
 description: Scaffold a C4 architecture workspace. Standalone mode for an empty directory; embedded mode adds an architecture/ subdirectory to an existing project.
 allowed-tools: Read, Write, Edit, Bash(ls:*), Bash(test:*), Bash(mkdir:*), Bash(cp:*), Bash(touch:*), Bash(scripts/validate-dsl.sh:*), Bash(docker:*)
 ---
 
-# init — scaffold a C4 workspace
+# structurize — scaffold a C4 workspace
 
 Create the minimal file layout required to start authoring a Structurizr DSL workspace alongside ADRs and supplementary docs.
 
 ## When to run
 
-- The user asks: *"set up C4 here"*, *"init a new architecture repo"*, *"add C4 to this project"*, *"scaffold the architecture docs"*.
+- The user asks: *"set up C4 here"*, *"structurize a new architecture repo"*, *"add C4 to this project"*, *"scaffold the architecture docs"*.
 - After installation, this is the first skill most users will invoke.
 
 ## Modes
@@ -96,7 +96,7 @@ After copying, **replace the placeholders** in the copied files:
 
 ## References
 
-If the user asks anything about file naming, ADR format, or doc structure during init, consult:
+If the user asks anything about file naming, ADR format, or doc structure during scaffolding, consult:
 
 - `${CLAUDE_PLUGIN_ROOT}/references/adrs-and-docs.md`
 
