@@ -29,11 +29,11 @@ All skills share a curated set of Structurizr DSL references bundled at the plug
 In a Claude Code session:
 
 ```
-/plugin marketplace add alexcristea/claude-marketplace
+/plugin marketplace add alexcristea/over-engineering-plugins
 /plugin install c4@over-engineering-plugins
 ```
 
-`alexcristea/claude-marketplace` is the [over-engineering-plugins marketplace](https://github.com/alexcristea/claude-marketplace), which lists this plugin among others. This plugin lives in its own repo, so any other marketplace can list it too — see its entry format in the marketplace README.
+`alexcristea/over-engineering-plugins` is the [over-engineering-plugins marketplace](https://github.com/alexcristea/over-engineering-plugins), which lists this plugin among others. This plugin lives in its own repo, so any other marketplace can list it too — see its entry format in the marketplace README.
 
 ### Directly from this repo
 
