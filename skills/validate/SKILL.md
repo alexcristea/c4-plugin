@@ -1,6 +1,6 @@
 ---
 name: validate
-description: Validate the current Structurizr DSL workspace by running structurizr/structurizr in Docker. Use for an on-demand check.
+description: Check a C4 workspace.dsl for syntax and semantic errors by running the Structurizr CLI in Docker, and explain any failure. Use when the user asks to validate, lint, or check the DSL, asks "is the workspace valid?", or wants a quality gate before committing or merging — and after any hand-edit made outside this plugin. For edits made through /c4:update, validation already runs automatically.
 allowed-tools: Read, Bash(scripts/validate-dsl.sh:*), Bash(ls:*), Bash(find:*), Bash(docker:*)
 ---
 
@@ -8,12 +8,9 @@ allowed-tools: Read, Bash(scripts/validate-dsl.sh:*), Bash(ls:*), Bash(find:*), 
 
 Runs `structurizr/structurizr validate` inside Docker against the workspace and reports the result.
 
-## When to run
+## Choosing between validate and update
 
-- The user asks: *"validate"*, *"is the workspace valid?"*, *"check the DSL"*, *"lint"*.
-- After a manual hand-edit the user made outside this plugin.
-
-The `update` skill already auto-validates after every edit — only invoke `validate` standalone when the user explicitly asks, or when a hand-edit was made.
+`update` auto-validates after every edit it makes, so a request that *changes* the model never needs `validate` as a separate step. Invoke `validate` standalone only when the user explicitly asks for a check, or when the workspace was hand-edited outside this plugin and nothing has verified it yet.
 
 ## Workflow
 

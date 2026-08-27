@@ -1,13 +1,13 @@
 ---
 name: conventions
-description: Project-level conventions are loaded automatically whenever a .dsl file, an ADR, or a doc is edited. Not user-invocable.
+description: House style for C4 workspaces on top of valid Structurizr DSL — camelCase identifiers and Title Case names, mandatory descriptions and canonical technology on every element, explicit view keys, present-tense relationship verbs with a technology on process boundaries, the External tag for third-party systems, and 4-digit append-only ADR numbering with Nygard status vocabulary. Consult before writing or editing any workspace.dsl, ADR, or supplementary doc.
 paths: "**/*.dsl, **/adrs/**, **/docs/**"
 allowed-tools: Read
 ---
 
-# conventions — project-level rules (auto-loaded)
+# conventions — project-level rules
 
-This skill is **not** invoked manually. The `paths:` trigger loads it into context whenever the agent edits a Structurizr DSL file, an ADR, or a supplementary doc, so the rules below are always in mind.
+The `paths:` frontmatter limits this skill to Structurizr DSL files, ADRs, and supplementary docs, so it stays out of the way on unrelated work. It is most useful loaded *before* an edit rather than after — the rules below are cheaper to follow than to retrofit.
 
 This file is the source of truth for our **project style** on top of valid DSL. For the DSL **grammar** itself — what each keyword does and how it's spelled — read the relevant file under `${CLAUDE_PLUGIN_ROOT}/references/`.
 

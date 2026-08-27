@@ -1,25 +1,12 @@
 ---
 name: update
-description: Edit a C4 workspace — add or change elements (server, service, container, database, actor), relationships, views, styles, deployment, ADRs, and docs. Use when the user describes a new or missing server/service, adds a dependency between systems, or makes any model change. Auto-validates after every workspace.dsl edit.
+description: Edit an existing C4 workspace — add or change elements (server, service, container, component, database, queue, actor), relationships, views, styles, deployment environments, ADRs, and docs. Use when the user describes a new or missing server/service, adds a dependency between systems, records an architecture decision, restyles a diagram, or makes any other model change — and when they ask to reverse-engineer or model an existing codebase as C4. Auto-validates after every workspace.dsl edit.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(scripts/validate-dsl.sh:*), Bash(find:*), Bash(ls:*), Bash(cat:*)
 ---
 
 # update — edit the workspace
 
 A single editing skill for **any** change to the C4 workspace: model, views, relationships, styles, deployment, ADRs, supplementary docs. Designed to be the everyday command — the user describes the change in natural language and you make it happen.
-
-## When to run
-
-- *"add a Postgres database and connect it to the API"*
-- *"add a container view for the checkout service"*
-- *"record an ADR about choosing Kafka over RabbitMQ"*
-- *"style external systems with a grey background"*
-- *"document the actors who use the system"*
-- *"reverse-engineer this repo into a C4 model"* (see [Discovery mode](#discovery-mode))
-- *"there is a new server I missed: tag-server — it's the Express + Nuxt service behind tag.example.io"*
-- *"I forgot to add the worker service — it calls the API and writes to the database"*
-- *"add a service: description, tech stack, URL, and what it depends on"*
-- *"missed element / missed container / missed service / missed component"*
 
 ## Workflow
 

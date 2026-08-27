@@ -74,17 +74,13 @@ Create a new directory under `skills/<name>/` with a single `SKILL.md`. Minimal 
 ```markdown
 ---
 name: <name>
-description: <one sentence, active voice, under 200 chars>
+description: <what it does> + <when to use it, in the words a user would actually say>
 allowed-tools: Read, Write, Edit, Bash(scripts/your-script.sh:*)
-# Optional: paths trigger for auto-loading (not user-invocable)
+# Optional: limit activation to matching files
 # paths: "**/*.dsl"
 ---
 
 # <name> — <short tagline>
-
-## When to run
-
-- <user phrases that should trigger this skill>
 
 ## Workflow
 
@@ -102,12 +98,27 @@ Use `${CLAUDE_PLUGIN_ROOT}/references/<file>.md` to access bundled grammar docs.
 
 ### Frontmatter fields
 
-| Field           | Required | Meaning                                                                                                  |
-|-----------------|----------|----------------------------------------------------------------------------------------------------------|
+| Field           | Required | Meaning                                                                                                                                                                                    |
+|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name`          | yes      | Skill name (lowercase, no spaces). Combined with the plugin name from `.claude-plugin/plugin.json` to form the slash command (e.g. plugin `c4` + skill `structurize` → `/c4:structurize`). |
-| `description`   | yes      | One sentence, active voice, under 200 characters. Used by Claude to decide whether to invoke the skill.   |
-| `allowed-tools` | yes      | Comma-separated list. Use `Bash(scripts/<file>:*)` to grant access to a specific script.                 |
-| `paths`         | no       | Glob(s) that trigger automatic loading. Use only for non-invocable skills like `conventions`.            |
+| `description`   | yes      | **The only thing Claude sees when choosing a skill.** See "Writing a description" below. No character cap — two or three sentences is normal.                                              |
+| `allowed-tools` | yes      | Comma-separated list. Matching is on the *expanded command prefix*, so `Bash(git:*)` means "bash, git commands only".                                                                      |
+| `paths`         | no       | Glob(s) that *limit* activation to matching files. It narrows when a skill may load; it does not force loading, so the description still has to earn the match.                            |
+
+### Writing a description
+
+The description is the whole triggering mechanism. The SKILL.md body — including any "when to run" list — is only read *after* Claude has already decided to invoke the skill, so trigger phrases placed there do no work.
+
+Write the description to carry both halves:
+
+1. **What it does**, naming the concrete nouns a user would say — formats, file types, element kinds. `export`'s description names PlantUML, Mermaid and JSON because users ask by format name.
+2. **When to use it**, in the user's words rather than yours, plus the boundary against any sibling skill that could plausibly claim the same request.
+
+Claude tends to *under*-trigger skills, so lean towards being explicit and a little pushy. `skills/update/SKILL.md` is the reference: it lists the element kinds by name and states the situations that call for it.
+
+Keep genuine sibling disambiguation in the body under a `## Choosing between <a> and <b>` heading — that is guidance for a skill already running, not a trigger.
+
+Descriptions are measurable. `evals/measure_routing.py` runs the full query pool against the working tree and reports which skill actually fires; see "Measuring skill routing" below.
 
 ## Updating references
 
@@ -169,7 +180,7 @@ Requires Docker. The script refuses to run if a `c4-architect-local` container i
 
 This catches: broken templates, placeholder-substitution bugs, script regressions, port conflicts, container-name regressions. **What it cannot catch:** whether Claude picks the right reference file, whether the generated DSL is sensible for a given prompt, whether the conventions skill is being followed. Those require the manual LLM-behaviour checklist below.
 
-### Manual LLM-behaviour checklist
+### Manual LLM-behavior checklist
 
 For changes that affect skill instructions, reference content, or conventions, run through this checklist in a real Claude Code session before opening the PR. Tick each box in the PR description.
 
@@ -191,11 +202,29 @@ In a sibling scratch directory containing a small existing project (e.g. a `Dock
 
 Skipping a checkbox is fine if the change is unrelated; note which boxes you skipped and why.
 
+### Measuring skill routing
+
+Whether a skill fires is measurable and worth measuring whenever you touch a `description`. The checklist above spot-checks a handful of phrasings; this measures the whole pool.
+
+`evals/build_trigger_evals.py` holds the query pool — ten realistic phrasings per skill, plus out-of-domain near-misses. `evals/measure_routing.py` runs every query against the **working tree** (via `claude -p --plugin-dir`, which overrides any installed copy) and records which skill Claude actually reached for:
+
+```sh
+python3 evals/build_trigger_evals.py            # regenerate the per-skill JSON sets
+python3 evals/measure_routing.py --runs 1 --workdir /path/to/scratch/workspace
+```
+
+Run it from a directory that contains a real C4 workspace, so queries aren't answered in an empty tree. Budget roughly a minute per query — 68 queries at 5 workers is about 12 minutes.
+
+The output is a routing confusion matrix, not a per-skill pass rate. That distinction matters: the risk with six sibling skills is not that one fails to fire but that the *wrong* one does. A miss row reading `exp=export got=preview` is telling you two descriptions overlap, which is the thing to go fix.
+
+A note on tooling: skill-creator's `run_eval.py` is not used here. It tests one skill at a time against a synthetic stand-in, so it cannot observe siblings competing — and with the real plugin installed, the stand-in and the genuine skill both fire, contaminating the result.
+
 ## Style guide
 
 ### SKILL.md
 
-- `description` is active voice, under 200 characters: *"Edit a C4 workspace ..."*, not *"This skill is used to edit ..."*.
+- `description` is active voice — *"Edit a C4 workspace ..."*, not *"This skill is used to edit ..."* — and carries the trigger phrases. No length cap; see [Writing a description](#writing-a-description). The six shipped descriptions run 380–500 characters.
+- No `## When to run` section. Trigger phrases belong in the description, which is the only part read at selection time. Sibling boundaries go under `## Choosing between <a> and <b>`.
 - Workflow is numbered, concrete steps. Avoid hedging language.
 - Always reference bundled files via `${CLAUDE_PLUGIN_ROOT}/...`.
 

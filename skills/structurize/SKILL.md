@@ -1,6 +1,6 @@
 ---
 name: structurize
-description: Scaffold a C4 architecture workspace. Standalone mode for an empty directory; embedded mode adds an architecture/ subdirectory to an existing project.
+description: Scaffold a new C4 architecture workspace from scratch — workspace.dsl, ADRs, docs, and a preview script — either at the repo root or in an architecture/ subdirectory of an existing project. Use when the user wants to start architecture documentation where none exists yet: "set up C4 here", "add a C4 model to this project", "scaffold the architecture docs", "start a new architecture repo". For changes to a workspace that already exists, use /c4:update instead.
 allowed-tools: Read, Write, Edit, Bash(ls:*), Bash(test:*), Bash(mkdir:*), Bash(cp:*), Bash(touch:*), Bash(scripts/validate-dsl.sh:*), Bash(docker:*)
 ---
 
@@ -8,10 +8,9 @@ allowed-tools: Read, Write, Edit, Bash(ls:*), Bash(test:*), Bash(mkdir:*), Bash(
 
 Create the minimal file layout required to start authoring a Structurizr DSL workspace alongside ADRs and supplementary docs.
 
-## When to run
+## Choosing between structurize and update
 
-- The user asks: *"set up C4 here"*, *"structurize a new architecture repo"*, *"add C4 to this project"*, *"scaffold the architecture docs"*.
-- After installation, this is the first skill most users will invoke.
+`structurize` creates a workspace that doesn't exist yet; `update` edits one that does. The distinction matters because scaffolding into a live workspace would overwrite real work. If `workspace.dsl` is already present at the root or under `architecture/`, the user almost certainly wants `update` — even when they phrase the request as "add C4 for the payments service".
 
 ## Modes
 

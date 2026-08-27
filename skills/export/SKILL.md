@@ -1,16 +1,12 @@
 ---
 name: export
-description: Render diagrams or a static HTML site from the workspace via the Structurizr vNext CLI in Docker.
+description: Render a C4 workspace to PlantUML, Mermaid, WebSequenceDiagrams, workspace JSON, a theme file, or a browsable static HTML site. Use whenever the user wants diagram source or files out of the model — "export the diagrams", Mermaid for a README, PlantUML for a wiki or Confluence, the workspace JSON for tooling, or a static site to host on GitHub Pages. Also use when they ask for PNG or SVG, to route them to a supported path.
 allowed-tools: Read, Bash(scripts/export-diagrams.sh:*), Bash(ls:*), Bash(find:*), Bash(docker:*)
 ---
 
 # export — render diagrams
 
 Shells out to `structurizr/structurizr export` in Docker to produce files in the requested format.
-
-## When to run
-
-- The user asks: *"export the diagrams"*, *"give me PlantUML"*, *"generate Mermaid for the README"*, *"build a static site"*, *"give me the workspace JSON"*.
 
 ## Supported formats
 
