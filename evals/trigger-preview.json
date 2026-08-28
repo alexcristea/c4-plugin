@@ -1,0 +1,82 @@
+[
+  {
+    "query": "open the diagrams so i can look at them",
+    "should_trigger": true
+  },
+  {
+    "query": "start the local structurizr server",
+    "should_trigger": true
+  },
+  {
+    "query": "i want to see the container view rendered, not the dsl",
+    "should_trigger": true
+  },
+  {
+    "query": "preview",
+    "should_trigger": true
+  },
+  {
+    "query": "can you render this in a browser, i'm trying to eyeball whether the layout makes any sense",
+    "should_trigger": true
+  },
+  {
+    "query": "spin up the preview on a different port, 8080 is taken by my dev server",
+    "should_trigger": true
+  },
+  {
+    "query": "stop the preview",
+    "should_trigger": true
+  },
+  {
+    "query": "shut down that structurizr container",
+    "should_trigger": true
+  },
+  {
+    "query": "let me see what this looks like while i'm editing - something that refreshes when i save",
+    "should_trigger": true
+  },
+  {
+    "query": "fire up the local viewer for the architecture model",
+    "should_trigger": true
+  },
+  {
+    "query": "we're moving the arch docs into the team wiki which only renders mermaid, can you get me the container diagram out of architecture/workspace.dsl in a format i can paste in",
+    "should_trigger": false
+  },
+  {
+    "query": "give me plantuml for the system context diagram, it's going in confluence",
+    "should_trigger": false
+  },
+  {
+    "query": "i need the workspace as json so i can feed it into a script",
+    "should_trigger": false
+  },
+  {
+    "query": "build a static site for the architecture that i can host on github pages",
+    "should_trigger": false
+  },
+  {
+    "query": "i hand-edited workspace.dsl in vim and i'm not sure i closed all the braces. can you check it",
+    "should_trigger": false
+  },
+  {
+    "query": "add a redis cache in front of the catalog service, the api reads from it",
+    "should_trigger": false
+  },
+  {
+    "query": "write a README section explaining in prose how the services talk to each other",
+    "should_trigger": false
+  },
+  {
+    "query": "generate an ER diagram from the prisma schema in packages/db",
+    "should_trigger": false
+  },
+  {
+    "query": "what's the actual difference between a container and a component in the c4 model? never been clear on it",
+    "should_trigger": false
+  },
+  {
+    "query": "docker compose up isn't working, the structurizr container exits immediately with code 1",
+    "should_trigger": false
+  }
+]

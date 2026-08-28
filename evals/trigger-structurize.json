@@ -1,0 +1,82 @@
+[
+  {
+    "query": "just made a new repo for our platform architecture docs, totally empty right now. can you set up whatever c4 needs so i can start writing the model",
+    "should_trigger": true
+  },
+  {
+    "query": "we've got a fairly big django monorepo at ~/work/atlas and zero architecture documentation. i want to start keeping c4 diagrams and ADRs in the repo without cluttering the root",
+    "should_trigger": true
+  },
+  {
+    "query": "scaffold the architecture docs for this project please",
+    "should_trigger": true
+  },
+  {
+    "query": "my team lead wants us to start doing the c4 model thing and i have no idea where the files go. can you lay it out",
+    "should_trigger": true
+  },
+  {
+    "query": "set up structurizr in here with the adr and docs folders",
+    "should_trigger": true
+  },
+  {
+    "query": "starting a new architecture repo from scratch for the payments platform. need workspace.dsl plus somewhere to put decision records",
+    "should_trigger": true
+  },
+  {
+    "query": "i want to add a c4 model to this go service but keep it in its own subdirectory so it doesn't get in the way of the source",
+    "should_trigger": true
+  },
+  {
+    "query": "can you bootstrap the c4 workspace, i'll fill in the actual systems after",
+    "should_trigger": true
+  },
+  {
+    "query": "new project, no docs yet. give me the skeleton for structurizr dsl + adrs + a way to preview locally",
+    "should_trigger": true
+  },
+  {
+    "query": "add architecture documentation to this repo - the c4 setup with the dsl file and adr templates",
+    "should_trigger": true
+  },
+  {
+    "query": "add a redis cache in front of the catalog service, the api reads from it",
+    "should_trigger": false
+  },
+  {
+    "query": "i forgot the notification worker - it's a python service that consumes from kafka and calls sendgrid. add it to the model",
+    "should_trigger": false
+  },
+  {
+    "query": "record an adr about why we picked postgres over dynamodb for the orders store, we already agreed on it",
+    "should_trigger": false
+  },
+  {
+    "query": "what naming style should i use for identifiers vs names in the dsl",
+    "should_trigger": false
+  },
+  {
+    "query": "i'm about to hand-write a bunch of containers in workspace.dsl, what are our rules for the description and technology fields",
+    "should_trigger": false
+  },
+  {
+    "query": "i hand-edited workspace.dsl in vim and i'm not sure i closed all the braces. can you check it",
+    "should_trigger": false
+  },
+  {
+    "query": "generate an ER diagram from the prisma schema in packages/db",
+    "should_trigger": false
+  },
+  {
+    "query": "what's the actual difference between a container and a component in the c4 model? never been clear on it",
+    "should_trigger": false
+  },
+  {
+    "query": "docker compose up isn't working, the structurizr container exits immediately with code 1",
+    "should_trigger": false
+  },
+  {
+    "query": "summarise what changed in the architecture since last release from the git log",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "what naming style should i use for identifiers vs names in the dsl",
+    "should_trigger": true
+  },
+  {
+    "query": "i'm about to hand-write a bunch of containers in workspace.dsl, what are our rules for the description and technology fields",
+    "should_trigger": true
+  },
+  {
+    "query": "how should i number a new adr in adrs/",
+    "should_trigger": true
+  },
+  {
+    "query": "am i supposed to mark external systems somehow in our model",
+    "should_trigger": true
+  },
+  {
+    "query": "writing docs/0004-migration-plan.md - what's the house style for these",
+    "should_trigger": true
+  },
+  {
+    "query": "should relationship descriptions be present tense or past tense in our dsl",
+    "should_trigger": true
+  },
+  {
+    "query": "do i need explicit view keys or can structurizr just generate them",
+    "should_trigger": true
+  },
+  {
+    "query": "remind me what our c4 conventions are before i start editing this dsl",
+    "should_trigger": true
+  },
+  {
+    "query": "i'm adding an adr that replaces 0002, what's the correct way to mark the old one",
+    "should_trigger": true
+  },
+  {
+    "query": "does my workspace.dsl follow the project style rules",
+    "should_trigger": true
+  },
+  {
+    "query": "add a redis cache in front of the catalog service, the api reads from it",
+    "should_trigger": false
+  },
+  {
+    "query": "i forgot the notification worker - it's a python service that consumes from kafka and calls sendgrid. add it to the model",
+    "should_trigger": false
+  },
+  {
+    "query": "record an adr about why we picked postgres over dynamodb for the orders store, we already agreed on it",
+    "should_trigger": false
+  },
+  {
+    "query": "just made a new repo for our platform architecture docs, totally empty right now. can you set up whatever c4 needs so i can start writing the model",
+    "should_trigger": false
+  },
+  {
+    "query": "we've got a fairly big django monorepo at ~/work/atlas and zero architecture documentation. i want to start keeping c4 diagrams and ADRs in the repo without cluttering the root",
+    "should_trigger": false
+  },
+  {
+    "query": "i hand-edited workspace.dsl in vim and i'm not sure i closed all the braces. can you check it",
+    "should_trigger": false
+  },
+  {
+    "query": "draw me a sequence diagram of the oauth handshake in figjam",
+    "should_trigger": false
+  },
+  {
+    "query": "our terraform is a mess, can you refactor the eks module so the node groups aren't duplicated",
+    "should_trigger": false
+  },
+  {
+    "query": "write a README section explaining in prose how the services talk to each other",
+    "should_trigger": false
+  },
+  {
+    "query": "generate an ER diagram from the prisma schema in packages/db",
+    "should_trigger": false
+  }
+]

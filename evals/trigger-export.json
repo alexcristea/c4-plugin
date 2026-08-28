@@ -1,0 +1,82 @@
+[
+  {
+    "query": "we're moving the arch docs into the team wiki which only renders mermaid, can you get me the container diagram out of architecture/workspace.dsl in a format i can paste in",
+    "should_trigger": true
+  },
+  {
+    "query": "give me plantuml for the system context diagram, it's going in confluence",
+    "should_trigger": true
+  },
+  {
+    "query": "i need the workspace as json so i can feed it into a script",
+    "should_trigger": true
+  },
+  {
+    "query": "build a static site for the architecture that i can host on github pages",
+    "should_trigger": true
+  },
+  {
+    "query": "export the diagrams",
+    "should_trigger": true
+  },
+  {
+    "query": "can i get svg versions of these diagrams for the slide deck on thursday",
+    "should_trigger": true
+  },
+  {
+    "query": "generate mermaid for the README so it renders on github",
+    "should_trigger": true
+  },
+  {
+    "query": "our docs pipeline consumes plantuml files, dump them into build/ for me",
+    "should_trigger": true
+  },
+  {
+    "query": "i want to deploy the architecture docs to cloudflare pages, what do i need to produce",
+    "should_trigger": true
+  },
+  {
+    "query": "get the theme json out of the workspace so i can reuse the styles in another model",
+    "should_trigger": true
+  },
+  {
+    "query": "open the diagrams so i can look at them",
+    "should_trigger": false
+  },
+  {
+    "query": "start the local structurizr server",
+    "should_trigger": false
+  },
+  {
+    "query": "i want to see the container view rendered, not the dsl",
+    "should_trigger": false
+  },
+  {
+    "query": "preview",
+    "should_trigger": false
+  },
+  {
+    "query": "add a redis cache in front of the catalog service, the api reads from it",
+    "should_trigger": false
+  },
+  {
+    "query": "i hand-edited workspace.dsl in vim and i'm not sure i closed all the braces. can you check it",
+    "should_trigger": false
+  },
+  {
+    "query": "our terraform is a mess, can you refactor the eks module so the node groups aren't duplicated",
+    "should_trigger": false
+  },
+  {
+    "query": "write a README section explaining in prose how the services talk to each other",
+    "should_trigger": false
+  },
+  {
+    "query": "generate an ER diagram from the prisma schema in packages/db",
+    "should_trigger": false
+  },
+  {
+    "query": "what's the actual difference between a container and a component in the c4 model? never been clear on it",
+    "should_trigger": false
+  }
+]

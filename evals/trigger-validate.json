@@ -1,0 +1,82 @@
+[
+  {
+    "query": "i hand-edited workspace.dsl in vim and i'm not sure i closed all the braces. can you check it",
+    "should_trigger": true
+  },
+  {
+    "query": "is the workspace valid?",
+    "should_trigger": true
+  },
+  {
+    "query": "run the structurizr validation before i push this",
+    "should_trigger": true
+  },
+  {
+    "query": "check the dsl for errors please",
+    "should_trigger": true
+  },
+  {
+    "query": "lint the architecture model",
+    "should_trigger": true
+  },
+  {
+    "query": "someone on the team edited architecture/workspace.dsl in a PR, can you verify it actually parses before i approve it",
+    "should_trigger": true
+  },
+  {
+    "query": "quality gate check on the c4 model before merging",
+    "should_trigger": true
+  },
+  {
+    "query": "does workspace.dsl still compile after that merge conflict resolution",
+    "should_trigger": true
+  },
+  {
+    "query": "i merged main into my branch and the dsl file had conflicts. verify nothing's broken",
+    "should_trigger": true
+  },
+  {
+    "query": "just double check the workspace file is syntactically fine, i didn't change anything through you",
+    "should_trigger": true
+  },
+  {
+    "query": "add a redis cache in front of the catalog service, the api reads from it",
+    "should_trigger": false
+  },
+  {
+    "query": "i forgot the notification worker - it's a python service that consumes from kafka and calls sendgrid. add it to the model",
+    "should_trigger": false
+  },
+  {
+    "query": "record an adr about why we picked postgres over dynamodb for the orders store, we already agreed on it",
+    "should_trigger": false
+  },
+  {
+    "query": "what naming style should i use for identifiers vs names in the dsl",
+    "should_trigger": false
+  },
+  {
+    "query": "i'm about to hand-write a bunch of containers in workspace.dsl, what are our rules for the description and technology fields",
+    "should_trigger": false
+  },
+  {
+    "query": "we're moving the arch docs into the team wiki which only renders mermaid, can you get me the container diagram out of architecture/workspace.dsl in a format i can paste in",
+    "should_trigger": false
+  },
+  {
+    "query": "docker compose up isn't working, the structurizr container exits immediately with code 1",
+    "should_trigger": false
+  },
+  {
+    "query": "summarise what changed in the architecture since last release from the git log",
+    "should_trigger": false
+  },
+  {
+    "query": "our confluence space is a mess, help me reorganise the engineering docs tree",
+    "should_trigger": false
+  },
+  {
+    "query": "draw me a sequence diagram of the oauth handshake in figjam",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "add a redis cache in front of the catalog service, the api reads from it",
+    "should_trigger": true
+  },
+  {
+    "query": "i forgot the notification worker - it's a python service that consumes from kafka and calls sendgrid. add it to the model",
+    "should_trigger": true
+  },
+  {
+    "query": "record an adr about why we picked postgres over dynamodb for the orders store, we already agreed on it",
+    "should_trigger": true
+  },
+  {
+    "query": "there's a new server i missed: tag-server, it's the express + nuxt thing behind tag.example.io",
+    "should_trigger": true
+  },
+  {
+    "query": "can you make external systems show up grey and dashed in the diagrams",
+    "should_trigger": true
+  },
+  {
+    "query": "model this codebase as c4 - have a look at the Dockerfiles, the k8s manifests and the routes and figure out what the containers are",
+    "should_trigger": true
+  },
+  {
+    "query": "add a deployment view for production, we run on EKS with RDS behind an ALB",
+    "should_trigger": true
+  },
+  {
+    "query": "the api doesn't talk to stripe directly anymore, it goes through the payments service now. fix the relationships",
+    "should_trigger": true
+  },
+  {
+    "query": "supersede adr 0003, we're moving to CQRS for the orders service",
+    "should_trigger": true
+  },
+  {
+    "query": "rename the 'API' container to 'Public API' and drop the legacy worker, we killed it last sprint",
+    "should_trigger": true
+  },
+  {
+    "query": "just made a new repo for our platform architecture docs, totally empty right now. can you set up whatever c4 needs so i can start writing the model",
+    "should_trigger": false
+  },
+  {
+    "query": "we've got a fairly big django monorepo at ~/work/atlas and zero architecture documentation. i want to start keeping c4 diagrams and ADRs in the repo without cluttering the root",
+    "should_trigger": false
+  },
+  {
+    "query": "scaffold the architecture docs for this project please",
+    "should_trigger": false
+  },
+  {
+    "query": "i hand-edited workspace.dsl in vim and i'm not sure i closed all the braces. can you check it",
+    "should_trigger": false
+  },
+  {
+    "query": "is the workspace valid?",
+    "should_trigger": false
+  },
+  {
+    "query": "what naming style should i use for identifiers vs names in the dsl",
+    "should_trigger": false
+  },
+  {
+    "query": "i'm about to hand-write a bunch of containers in workspace.dsl, what are our rules for the description and technology fields",
+    "should_trigger": false
+  },
+  {
+    "query": "what's the actual difference between a container and a component in the c4 model? never been clear on it",
+    "should_trigger": false
+  },
+  {
+    "query": "docker compose up isn't working, the structurizr container exits immediately with code 1",
+    "should_trigger": false
+  },
+  {
+    "query": "summarise what changed in the architecture since last release from the git log",
+    "should_trigger": false
+  }
+]
