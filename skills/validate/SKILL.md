@@ -1,7 +1,7 @@
 ---
 name: validate
 description: Check a C4 workspace.dsl for syntax and semantic errors by running the Structurizr CLI in Docker, and explain any failure. Use when the user asks to validate, lint, or check the DSL, asks "is the workspace valid?", or wants a quality gate before committing or merging — and after any hand-edit made outside this plugin. For edits made through /c4:update, validation already runs automatically.
-allowed-tools: Read, Bash(scripts/validate-dsl.sh:*), Bash(ls:*), Bash(find:*), Bash(docker:*)
+allowed-tools: Read, Bash(bash:*), Bash(ls:*), Bash(find:*), Bash(docker:*)
 ---
 
 # validate — run Structurizr CLI against the workspace
@@ -18,7 +18,7 @@ Runs `structurizr/structurizr validate` inside Docker against the workspace and 
 2. **Run the script:**
 
    ```
-   ${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh <path-to-workspace.dsl>
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh <path-to-workspace.dsl>
    ```
 
 3. **Report:**

@@ -1,7 +1,7 @@
 ---
 name: export
 description: Render a C4 workspace to PlantUML, Mermaid, WebSequenceDiagrams, workspace JSON, a theme file, or a browsable static HTML site. Use whenever the user wants diagram source or files out of the model — "export the diagrams", Mermaid for a README, PlantUML for a wiki or Confluence, the workspace JSON for tooling, or a static site to host on GitHub Pages. Also use when they ask for PNG or SVG, to route them to a supported path.
-allowed-tools: Read, Bash(scripts/export-diagrams.sh:*), Bash(ls:*), Bash(find:*), Bash(docker:*)
+allowed-tools: Read, Bash(bash:*), Bash(ls:*), Bash(find:*), Bash(docker:*)
 ---
 
 # export — render diagrams
@@ -42,7 +42,7 @@ If the user wants raster/vector output, route them to one of:
 4. **Run the script:**
 
    ```
-   ${CLAUDE_PLUGIN_ROOT}/scripts/export-diagrams.sh <format> <workspace.dsl> <output-dir>
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/export-diagrams.sh <format> <workspace.dsl> <output-dir>
    ```
 
 5. **Report.** List the generated files. For `static`, mention how to serve them locally (`python3 -m http.server` in the output dir or any equivalent).

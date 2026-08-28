@@ -1,7 +1,7 @@
 ---
 name: update
 description: Edit an existing C4 workspace — add or change elements (server, service, container, component, database, queue, actor), relationships, views, styles, deployment environments, ADRs, and docs. Use when the user describes a new or missing server/service, adds a dependency between systems, records an architecture decision, restyles a diagram, or makes any other model change — and when they ask to reverse-engineer or model an existing codebase as C4. Auto-validates after every workspace.dsl edit.
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash(scripts/validate-dsl.sh:*), Bash(find:*), Bash(ls:*), Bash(cat:*)
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash(bash:*), Bash(find:*), Bash(ls:*), Bash(cat:*)
 ---
 
 # update — edit the workspace
@@ -26,7 +26,7 @@ A single editing skill for **any** change to the C4 workspace: model, views, rel
    - "add a deployment view" → `deployment.md`, `views.md`
    - "write an ADR" → `adrs-and-docs.md`
 4. **Make the edit** with `Edit` (preferred) or `Write` (only for new files).
-5. **Auto-validate.** Immediately run `scripts/validate-dsl.sh <path-to-workspace.dsl>`.
+5. **Auto-validate.** Immediately run `bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh <path-to-workspace.dsl>`.
 6. **Self-correct.** If validation fails, read the error, re-consult references, fix, and re-validate. Repeat until it passes (max 3 attempts; if still failing, surface the error to the user with a clear diagnosis).
 7. **Report.** State exactly what was changed (paths + summary), plus the validation result.
 

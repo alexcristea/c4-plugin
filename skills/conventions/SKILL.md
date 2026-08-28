@@ -2,7 +2,7 @@
 name: conventions
 description: House style for C4 workspaces on top of valid Structurizr DSL — camelCase identifiers and Title Case names, mandatory descriptions and canonical technology on every element, explicit view keys, present-tense relationship verbs with a technology on process boundaries, the External tag for third-party systems, and 4-digit append-only ADR numbering with Nygard status vocabulary. Consult before writing or editing any workspace.dsl, ADR, or supplementary doc.
 paths: "**/*.dsl, **/adrs/**, **/docs/**"
-allowed-tools: Read
+allowed-tools: Read, Bash(bash:*)
 ---
 
 # conventions — project-level rules
@@ -49,4 +49,4 @@ Read that file before adding or editing anything under `adrs/` or `docs/`. The m
 
 ## Validation
 
-The `update` skill auto-validates after each edit. If you touch `workspace.dsl` directly via `Edit` / `Write` without going through `update`, **manually run** `${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh` before reporting completion.
+The `update` skill auto-validates after each edit. If you touch `workspace.dsl` directly via `Edit` / `Write` without going through `update`, **manually run** `bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh` before reporting completion.

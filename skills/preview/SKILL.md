@@ -1,7 +1,7 @@
 ---
 name: preview
 description: Start or stop a live browser preview of the C4 workspace at http://localhost:8080, re-rendering as the DSL is edited. Use whenever the user wants to look at the diagrams rather than get files out of them — "preview", "open the diagrams", "render this in a browser", "start the local server", "let me see the container view" — and equally for "stop the preview" or "shut it down".
-allowed-tools: Read, Bash(scripts/preview-start.sh:*), Bash(scripts/preview-stop.sh:*), Bash(docker:*), Bash(ls:*)
+allowed-tools: Read, Bash(bash:*), Bash(docker:*), Bash(ls:*)
 ---
 
 # preview — live diagram preview at localhost:8080
@@ -20,7 +20,7 @@ Both surface the diagrams, but they answer different asks. `preview` is for *loo
 2. **Run:**
 
    ```
-   ${CLAUDE_PLUGIN_ROOT}/scripts/preview-start.sh <workspace-dir>
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/preview-start.sh <workspace-dir>
    ```
 
 3. **Report:**
@@ -31,7 +31,7 @@ Both surface the diagrams, but they answer different asks. `preview` is for *loo
 ### Stop
 
 ```
-${CLAUDE_PLUGIN_ROOT}/scripts/preview-stop.sh
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/preview-stop.sh
 ```
 
 Idempotent — succeeds silently if nothing is running.

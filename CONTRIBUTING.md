@@ -75,7 +75,7 @@ Create a new directory under `skills/<name>/` with a single `SKILL.md`. Minimal 
 ---
 name: <name>
 description: <what it does> + <when to use it, in the words a user would actually say>
-allowed-tools: Read, Write, Edit, Bash(scripts/your-script.sh:*)
+allowed-tools: Read, Write, Edit, Bash(bash:*)
 # Optional: limit activation to matching files
 # paths: "**/*.dsl"
 ---

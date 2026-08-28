@@ -1,7 +1,7 @@
 ---
 name: structurize
 description: Scaffold a new C4 architecture workspace from scratch — workspace.dsl, ADRs, docs, and a preview script — either at the repo root or in an architecture/ subdirectory of an existing project. Use when the user wants to start architecture documentation where none exists yet: "set up C4 here", "add a C4 model to this project", "scaffold the architecture docs", "start a new architecture repo". For changes to a workspace that already exists, use /c4:update instead.
-allowed-tools: Read, Write, Edit, Bash(ls:*), Bash(test:*), Bash(mkdir:*), Bash(cp:*), Bash(touch:*), Bash(scripts/validate-dsl.sh:*), Bash(docker:*)
+allowed-tools: Read, Write, Edit, Bash(ls:*), Bash(test:*), Bash(mkdir:*), Bash(cp:*), Bash(touch:*), Bash(bash:*), Bash(docker:*)
 ---
 
 # structurize — scaffold a C4 workspace
@@ -104,7 +104,7 @@ If the user asks anything about file naming, ADR format, or doc structure during
 After copying and placeholder substitution, validate the seeded `workspace.dsl` to catch template corruption or bad substitution before the user starts editing:
 
 ```
-${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh <path-to-workspace.dsl>
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh <path-to-workspace.dsl>
 ```
 
 Handle the result:
