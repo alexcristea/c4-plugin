@@ -17,7 +17,7 @@ tests/smoke.sh                                                 # end-to-end: tem
 scripts/update-references.sh                                   # list upstream Structurizr DSL doc changes since references/.upstream-sha
 ```
 
-`tests/smoke.sh` refuses to run if a `c4-architect-local` container exists; `C4_SMOKE_PORT` overrides its port (default 8081). It installs a `docker` shim on `PATH` that fails any `docker run structurizr/structurizr` lacking `--user $(id -u):$(id -g)`.
+`tests/smoke.sh` refuses to run if a `c4-preview` container exists; `C4_SMOKE_PORT` overrides its port (default 8081). It installs a `docker` shim on `PATH` that fails any `docker run structurizr/structurizr` lacking `--user $(id -u):$(id -g)`.
 
 To measure which skill fires for which phrasing (slow — runs `claude -p` per query, ~12 min):
 

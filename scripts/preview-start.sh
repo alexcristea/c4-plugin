@@ -20,7 +20,7 @@
 set -euo pipefail
 
 WORKSPACE_DIR="${1:-.}"
-CONTAINER_NAME="c4-architect-local"
+CONTAINER_NAME="c4-preview"
 PORT="${C4_PREVIEW_PORT:-8080}"
 
 if ! command -v docker >/dev/null 2>&1; then

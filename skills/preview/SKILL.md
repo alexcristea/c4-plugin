@@ -25,7 +25,7 @@ Both surface the diagrams, but they answer different asks. `preview` is for *loo
 
 3. **Report:**
    - On success: `Preview running at http://localhost:8080`.
-   - The container is named `c4-architect-local`; if it was already running, the script restarts it cleanly.
+   - The container is named `c4-preview`; if it was already running, the script restarts it cleanly.
    - Custom port: set `C4_PREVIEW_PORT=<n>` before running.
 
 ### Stop

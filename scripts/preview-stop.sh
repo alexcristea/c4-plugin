@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-CONTAINER_NAME="c4-architect-local"
+CONTAINER_NAME="c4-preview"
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "error: docker is not installed or not on PATH" >&2

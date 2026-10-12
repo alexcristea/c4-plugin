@@ -183,7 +183,7 @@ All must exit `0`.
 tests/smoke.sh
 ```
 
-Requires Docker. The script refuses to run if a `c4-architect-local` container is already up (so it doesn't clobber a real preview you have running). Set `C4_SMOKE_PORT=<n>` to use a different port.
+Requires Docker. The script refuses to run if a `c4-preview` container is already up (so it doesn't clobber a real preview you have running). Set `C4_SMOKE_PORT=<n>` to use a different port.
 
 This catches: broken templates, placeholder-substitution bugs, script regressions, port conflicts, container-name regressions. **What it cannot catch:** whether Claude picks the right reference file, whether the generated DSL is sensible for a given prompt, whether the conventions skill is being followed. Those require the manual LLM-behaviour checklist below.
 

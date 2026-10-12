@@ -16,7 +16,7 @@
 # ------------
 # - Docker daemon running.
 # - Port 8081 (override with C4_SMOKE_PORT=<n>) free.
-# - No existing container named "c4-architect-local" (the preview script's fixed
+# - No existing container named "c4-preview" (the preview script's fixed
 #   name). The script refuses to run if one is present, to avoid clobbering a
 #   real preview the user has running.
 
@@ -25,7 +25,7 @@ set -euo pipefail
 PLUGIN_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WORK_BASE="$(mktemp -d)"
 PORT="${C4_SMOKE_PORT:-8081}"
-CONTAINER_NAME="c4-architect-local"   # must match scripts/preview-start.sh
+CONTAINER_NAME="c4-preview"   # must match scripts/preview-start.sh
 
 cleanup() {
   # On any exit, remove the preview container if WE started one. We detect
