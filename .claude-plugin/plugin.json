@@ -1,6 +1,6 @@
 {
   "name": "c4",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Author C4 architecture diagrams as Structurizr DSL, with ADRs and supplementary docs.",
   "author": {
     "name": "Alex Cristea"
