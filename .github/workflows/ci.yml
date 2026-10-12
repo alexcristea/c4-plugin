@@ -83,6 +83,9 @@ jobs:
               sys.exit(1)
           PY
 
+      - name: Template docs and ADRs use Structurizr heading levels
+        run: python3 tests/check-doc-headings.py
+
   smoke:
     name: Smoke (validate examples)
     runs-on: ubuntu-latest

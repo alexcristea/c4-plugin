@@ -11,6 +11,7 @@ A Claude Code plugin (`c4`, manifest in `.claude-plugin/plugin.json`) for author
 ```sh
 shellcheck scripts/*.sh templates/workspace/bin/local/run.sh   # lint (CI)
 python3 tests/check-skill-grants.py                            # allowed-tools grants can actually match (not in CI)
+python3 tests/check-doc-headings.py                            # template docs start at ##, ADRs at # (CI)
 scripts/validate-dsl.sh examples/simple-web-app/workspace.dsl  # validate one workspace (needs Docker)
 tests/smoke.sh                                                 # end-to-end: template → validate → export → preview (needs Docker)
 scripts/update-references.sh                                   # list upstream Structurizr DSL doc changes since references/.upstream-sha

@@ -1,24 +1,24 @@
-# 1. System overview
+## System overview
 
 A high-level description of {{PROJECT_NAME}}: what problem it solves, who uses it, and its broad shape.
 
-## Purpose
+### Purpose
 
 <One paragraph: what is this system for? What does success look like?>
 
-## Scope
+### Scope
 
 <What the system **does** include — capabilities, surfaces, integrations.>
 
-## Non-goals
+### Non-goals
 
 <What the system explicitly does **not** do — sets boundaries for future feature requests.>
 
-## Key concepts
+### Key concepts
 
 <Domain vocabulary the reader needs to make sense of the rest of the documentation.>
 
-## Related documents
+### Related documents
 
 - [Actors](0002-actors.md) — who interacts with the system
 - [Use cases](0003-use-cases.md) — what the system does for those actors

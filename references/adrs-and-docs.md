@@ -21,7 +21,16 @@ How to attach Markdown/AsciiDoc documentation and ADRs to a workspace, software 
 - `<path>` is a relative path, in the same directory as the parent DSL file or a subdirectory.
 - Default importer: `com.structurizr.importer.documentation.DefaultDocumentationImporter`.
 - Behaviour: imports **all** Markdown/AsciiDoc files in the directory, alphabetically by filename. Images in the directory (and subdirectories) are also imported.
-- Section headings and numbering: see Structurizr documentation on heading conventions.
+- Section headings and numbering: Structurizr numbers sections itself, by heading level:
+
+| Markdown    | AsciiDoc    | Rendered                                                                           | In navigation |
+|-------------|-------------|------------------------------------------------------------------------------------|---------------|
+| `# Name`    | `= Name`    | Hidden — the top heading is generated from the workspace/system/container name     | Yes           |
+| `## Name`   | `== Name`   | `1 Name`                                                                           | Yes           |
+| `### Name`  | `=== Name`  | `1.1 Name`                                                                         | Yes           |
+| `#### Name` | `==== Name` | `1.1.1 Name`                                                                       | No            |
+
+So a doc's title is `##`, not `#`, and carries no hand-written number. ADRs are different: they keep the `#` title (see the ADR template below).
 
 Use `!docs` inside `workspace`, `softwareSystem`, or `container`:
 
@@ -124,14 +133,17 @@ When superseding or amending, **never** edit the original ADR's body — change 
 ## Plugin conventions: docs template
 
 ```markdown
-# <number>. <Title>
+## <Title>
 
 <One-paragraph summary of what this document covers.>
 
-## ...sections...
+### ...sections...
 
 <Free-form content. Cross-link other docs and ADRs as needed.>
 ```
+
+- The title is `##` and the sections are `###`. A `#` heading is hidden in the rendered docs, and a hand-written number would print twice (`1 1. Title`). See the heading table under [`!docs`](#docs--supplementary-docs).
+- Ordering comes from the filename prefix (`0001-`, `0002-`, …), not from the heading.
 
 Suggested doc set, in order:
 
@@ -160,6 +172,7 @@ When you supersede an ADR, the **new** ADR's Context must reference the old one 
 
 - https://github.com/structurizr/structurizr.github.io/blob/main/dsl/51-docs.md
 - https://github.com/structurizr/structurizr.github.io/blob/main/dsl/52-adrs.md
+- https://github.com/structurizr/structurizr.github.io/blob/main/commands/03-server/23-documentation/01-headings.md
 - Nygard ADR format: https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
 
-Pulled: 2026-05-12
+Pulled: 2026-10-12

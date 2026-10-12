@@ -1,10 +1,10 @@
-# 2. Actors
+## Actors
 
 The people, roles, and external systems that interact with {{PROJECT_NAME}}.
 
-## Human actors
+### Human actors
 
-### <Actor name>
+#### <Actor name>
 
 - **What they do**: <primary responsibility>
 - **Why they use the system**: <motivation>
@@ -12,9 +12,9 @@ The people, roles, and external systems that interact with {{PROJECT_NAME}}.
 
 <Repeat per actor.>
 
-## External systems
+### External systems
 
-### <System name>
+#### <System name>
 
 - **What it provides / consumes**: <integration purpose>
 - **Direction**: <inbound / outbound / bidirectional>
@@ -22,7 +22,7 @@ The people, roles, and external systems that interact with {{PROJECT_NAME}}.
 
 <Repeat per external system.>
 
-## Related documents
+### Related documents
 
 - [System overview](0001-system-overview.md)
 - [Use cases](0003-use-cases.md)

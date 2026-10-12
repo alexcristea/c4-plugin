@@ -46,6 +46,7 @@ Read that file before adding or editing anything under `adrs/` or `docs/`. The m
 
 - Filenames are 4-digit zero-padded, kebab-case (`0001-use-c4-model-with-structurizr.md`). The adr-tools-compatible importer used by Structurizr requires 4 digits — 3-digit names fail validation. Numbers are **append-only**, never renumbered.
 - When superseding an ADR, edit **only** the old ADR's Status line. The new ADR's Context must link back to the old one.
+- Docs under `docs/` start at `## <Title>` (no number) with `###` sections, because Structurizr hides `#` and numbers sections itself. ADRs keep `# <number>. <title>`.
 
 ## Validation
 

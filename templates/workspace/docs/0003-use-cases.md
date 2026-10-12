@@ -1,8 +1,8 @@
-# 3. Use cases
+## Use cases
 
 What {{PROJECT_NAME}} does for its actors. Organised by capability rather than by screen or endpoint.
 
-## Use case: <name>
+### Use case: <name>
 
 - **Actor**: <which actor — see [Actors](0002-actors.md)>
 - **Trigger**: <what initiates this use case>
@@ -15,7 +15,7 @@ What {{PROJECT_NAME}} does for its actors. Organised by capability rather than b
 
 <Repeat per use case.>
 
-## Related documents
+### Related documents
 
 - [System overview](0001-system-overview.md)
 - [Actors](0002-actors.md)
