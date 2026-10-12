@@ -1,0 +1,402 @@
+{
+  "configuration" : { },
+  "description" : "A web shop deployed to AWS, styled with the Structurizr AWS theme.",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedDate" : "2026-10-12T06:21:45Z",
+  "model" : {
+    "deploymentNodes" : [ {
+      "children" : [ {
+        "children" : [ {
+          "children" : [ {
+            "children" : [ {
+              "containerInstances" : [ {
+                "containerId" : "3",
+                "environment" : "Production",
+                "id" : "17",
+                "instanceId" : 1,
+                "properties" : {
+                  "structurizr.dsl.identifier" : "webAppInstance"
+                },
+                "relationships" : [ {
+                  "description" : "Reads from and writes to",
+                  "destinationId" : "19",
+                  "id" : "20",
+                  "linkedRelationshipId" : "8",
+                  "sourceId" : "17",
+                  "technology" : "SQL/TLS"
+                }, {
+                  "description" : "Reads cover images from",
+                  "destinationId" : "22",
+                  "id" : "23",
+                  "linkedRelationshipId" : "9",
+                  "sourceId" : "17",
+                  "technology" : "HTTPS"
+                } ],
+                "tags" : "Container Instance"
+              } ],
+              "environment" : "Production",
+              "id" : "16",
+              "instances" : "2",
+              "name" : "Fargate Task",
+              "properties" : {
+                "structurizr.dsl.identifier" : "b3d1698a-3e25-484b-8709-e6bdb284752a"
+              },
+              "tags" : "Element,Deployment Node,,Amazon Web Services - Fargate",
+              "technology" : "AWS Fargate"
+            } ],
+            "environment" : "Production",
+            "id" : "15",
+            "instances" : "1",
+            "name" : "ECS Cluster",
+            "properties" : {
+              "structurizr.dsl.identifier" : "0d4639e4-122b-428b-b69c-626189581e1d"
+            },
+            "tags" : "Element,Deployment Node,Amazon Web Services - Elastic Container Service",
+            "technology" : "Amazon ECS"
+          }, {
+            "containerInstances" : [ {
+              "containerId" : "4",
+              "environment" : "Production",
+              "id" : "19",
+              "instanceId" : 1,
+              "properties" : {
+                "structurizr.dsl.identifier" : "edb80c5e-57d7-4036-b3d9-2afb46bb6ed1"
+              },
+              "tags" : "Container Instance"
+            } ],
+            "environment" : "Production",
+            "id" : "18",
+            "instances" : "1",
+            "name" : "Database Server",
+            "properties" : {
+              "structurizr.dsl.identifier" : "d04198f2-c162-4d4d-bc82-93647c4347a6"
+            },
+            "tags" : "Element,Deployment Node,Amazon Web Services - RDS",
+            "technology" : "Amazon RDS for PostgreSQL"
+          } ],
+          "environment" : "Production",
+          "id" : "14",
+          "instances" : "1",
+          "name" : "VPC",
+          "properties" : {
+            "structurizr.dsl.identifier" : "96094e4f-3a20-4939-8622-187cf0a5edbc"
+          },
+          "tags" : "Element,Deployment Node,Amazon Web Services - Virtual Private Cloud",
+          "technology" : "Amazon VPC"
+        }, {
+          "containerInstances" : [ {
+            "containerId" : "5",
+            "environment" : "Production",
+            "id" : "22",
+            "instanceId" : 1,
+            "properties" : {
+              "structurizr.dsl.identifier" : "45e2bf92-c83f-448d-8ede-04cd9e71ecc9"
+            },
+            "tags" : "Container Instance"
+          } ],
+          "environment" : "Production",
+          "id" : "21",
+          "instances" : "1",
+          "name" : "Bucket",
+          "properties" : {
+            "structurizr.dsl.identifier" : "59aef23e-15e0-4737-9207-02d54344d7c0"
+          },
+          "tags" : "Element,Deployment Node,Amazon Web Services - Simple Storage Service",
+          "technology" : "Amazon S3"
+        } ],
+        "environment" : "Production",
+        "id" : "11",
+        "infrastructureNodes" : [ {
+          "description" : "Routes bookstore.example.com to the load balancer.",
+          "environment" : "Production",
+          "id" : "12",
+          "name" : "DNS",
+          "properties" : {
+            "structurizr.dsl.identifier" : "dns"
+          },
+          "relationships" : [ {
+            "description" : "Forwards requests to",
+            "destinationId" : "13",
+            "id" : "24",
+            "sourceId" : "12",
+            "tags" : "Relationship",
+            "technology" : "HTTPS"
+          } ],
+          "tags" : "Element,Infrastructure Node,Amazon Web Services - Route 53",
+          "technology" : "Amazon Route 53"
+        }, {
+          "description" : "Terminates TLS and spreads traffic across tasks.",
+          "environment" : "Production",
+          "id" : "13",
+          "name" : "Load Balancer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "loadBalancer"
+          },
+          "relationships" : [ {
+            "description" : "Forwards requests to",
+            "destinationId" : "17",
+            "id" : "25",
+            "sourceId" : "13",
+            "tags" : "Relationship",
+            "technology" : "HTTPS"
+          } ],
+          "tags" : "Element,Infrastructure Node,Amazon Web Services - Load Balancing",
+          "technology" : "Application Load Balancer"
+        } ],
+        "instances" : "1",
+        "name" : "eu-west-1",
+        "properties" : {
+          "structurizr.dsl.identifier" : "4ea76ca3-2c27-424e-864d-9835e055ea18"
+        },
+        "tags" : "Element,Deployment Node,Amazon Web Services - Region",
+        "technology" : "AWS Region"
+      } ],
+      "environment" : "Production",
+      "id" : "10",
+      "instances" : "1",
+      "name" : "Amazon Web Services",
+      "properties" : {
+        "structurizr.dsl.identifier" : "9fe5047b-1ed7-4f53-9034-19783cee5061"
+      },
+      "tags" : "Element,Deployment Node,Amazon Web Services - AWS Cloud",
+      "technology" : "AWS"
+    } ],
+    "people" : [ {
+      "description" : "Browses and buys books.",
+      "id" : "1",
+      "name" : "Customer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "customer"
+      },
+      "relationships" : [ {
+        "description" : "Browses and buys books using",
+        "destinationId" : "3",
+        "id" : "6",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Browses and buys books using",
+        "destinationId" : "2",
+        "id" : "7",
+        "linkedRelationshipId" : "6",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Serves the storefront and checkout API.",
+        "documentation" : { },
+        "id" : "3",
+        "name" : "Web App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webApp"
+        },
+        "relationships" : [ {
+          "description" : "Reads from and writes to",
+          "destinationId" : "4",
+          "id" : "8",
+          "sourceId" : "3",
+          "tags" : "Relationship",
+          "technology" : "SQL/TLS"
+        }, {
+          "description" : "Reads cover images from",
+          "destinationId" : "5",
+          "id" : "9",
+          "sourceId" : "3",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Node.js"
+      }, {
+        "description" : "Stores catalogue and orders.",
+        "documentation" : { },
+        "id" : "4",
+        "name" : "Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "database"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "Postgres"
+      }, {
+        "description" : "Holds book cover images.",
+        "documentation" : { },
+        "id" : "5",
+        "name" : "Asset Store",
+        "properties" : {
+          "structurizr.dsl.identifier" : "assets"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "Amazon S3"
+      } ],
+      "description" : "Sells books online.",
+      "documentation" : { },
+      "id" : "2",
+      "name" : "Bookstore",
+      "properties" : {
+        "structurizr.dsl.identifier" : "bookstore"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Bookstore on AWS",
+  "properties" : {
+    "structurizr.inspection.error" : "10",
+    "structurizr.dsl" : "d29ya3NwYWNlICJCb29rc3RvcmUgb24gQVdTIiAiQSB3ZWIgc2hvcCBkZXBsb3llZCB0byBBV1MsIHN0eWxlZCB3aXRoIHRoZSBTdHJ1Y3R1cml6ciBBV1MgdGhlbWUuIiB7CgogICAgbW9kZWwgewogICAgICAgIGN1c3RvbWVyID0gcGVyc29uICJDdXN0b21lciIgIkJyb3dzZXMgYW5kIGJ1eXMgYm9va3MuIgoKICAgICAgICBib29rc3RvcmUgPSBzb2Z0d2FyZVN5c3RlbSAiQm9va3N0b3JlIiAiU2VsbHMgYm9va3Mgb25saW5lLiIgewogICAgICAgICAgICB3ZWJBcHAgPSBjb250YWluZXIgIldlYiBBcHAiICJTZXJ2ZXMgdGhlIHN0b3JlZnJvbnQgYW5kIGNoZWNrb3V0IEFQSS4iICJOb2RlLmpzIgogICAgICAgICAgICBkYXRhYmFzZSA9IGNvbnRhaW5lciAiRGF0YWJhc2UiICJTdG9yZXMgY2F0YWxvZ3VlIGFuZCBvcmRlcnMuIiAiUG9zdGdyZXMiIHsKICAgICAgICAgICAgICAgIHRhZ3MgIkRhdGFiYXNlIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGFzc2V0cyA9IGNvbnRhaW5lciAiQXNzZXQgU3RvcmUiICJIb2xkcyBib29rIGNvdmVyIGltYWdlcy4iICJBbWF6b24gUzMiIHsKICAgICAgICAgICAgICAgIHRhZ3MgIkRhdGFiYXNlIgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBjdXN0b21lciAtPiB3ZWJBcHAgIkJyb3dzZXMgYW5kIGJ1eXMgYm9va3MgdXNpbmciICJIVFRQUyIKICAgICAgICB3ZWJBcHAgLT4gZGF0YWJhc2UgIlJlYWRzIGZyb20gYW5kIHdyaXRlcyB0byIgIlNRTC9UTFMiCiAgICAgICAgd2ViQXBwIC0+IGFzc2V0cyAiUmVhZHMgY292ZXIgaW1hZ2VzIGZyb20iICJIVFRQUyIKCiAgICAgICAgcHJvZHVjdGlvbiA9IGRlcGxveW1lbnRFbnZpcm9ubWVudCAiUHJvZHVjdGlvbiIgewogICAgICAgICAgICBkZXBsb3ltZW50Tm9kZSAiQW1hem9uIFdlYiBTZXJ2aWNlcyIgIiIgIkFXUyIgewogICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIEFXUyBDbG91ZCIKCiAgICAgICAgICAgICAgICBkZXBsb3ltZW50Tm9kZSAiZXUtd2VzdC0xIiAiIiAiQVdTIFJlZ2lvbiIgewogICAgICAgICAgICAgICAgICAgIHRhZ3MgIkFtYXpvbiBXZWIgU2VydmljZXMgLSBSZWdpb24iCgogICAgICAgICAgICAgICAgICAgIGRucyA9IGluZnJhc3RydWN0dXJlTm9kZSAiRE5TIiAiUm91dGVzIGJvb2tzdG9yZS5leGFtcGxlLmNvbSB0byB0aGUgbG9hZCBiYWxhbmNlci4iICJBbWF6b24gUm91dGUgNTMiIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFJvdXRlIDUzIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBsb2FkQmFsYW5jZXIgPSBpbmZyYXN0cnVjdHVyZU5vZGUgIkxvYWQgQmFsYW5jZXIiICJUZXJtaW5hdGVzIFRMUyBhbmQgc3ByZWFkcyB0cmFmZmljIGFjcm9zcyB0YXNrcy4iICJBcHBsaWNhdGlvbiBMb2FkIEJhbGFuY2VyIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkFtYXpvbiBXZWIgU2VydmljZXMgLSBMb2FkIEJhbGFuY2luZyIKICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgIGRlcGxveW1lbnROb2RlICJWUEMiICIiICJBbWF6b24gVlBDIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkFtYXpvbiBXZWIgU2VydmljZXMgLSBWaXJ0dWFsIFByaXZhdGUgQ2xvdWQiCgogICAgICAgICAgICAgICAgICAgICAgICBkZXBsb3ltZW50Tm9kZSAiRUNTIENsdXN0ZXIiICIiICJBbWF6b24gRUNTIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gRWxhc3RpYyBDb250YWluZXIgU2VydmljZSIKCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZXBsb3ltZW50Tm9kZSAiRmFyZ2F0ZSBUYXNrIiAiIiAiQVdTIEZhcmdhdGUiICIiIDIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkFtYXpvbiBXZWIgU2VydmljZXMgLSBGYXJnYXRlIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdlYkFwcEluc3RhbmNlID0gY29udGFpbmVySW5zdGFuY2Ugd2ViQXBwCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgICAgIGRlcGxveW1lbnROb2RlICJEYXRhYmFzZSBTZXJ2ZXIiICIiICJBbWF6b24gUkRTIGZvciBQb3N0Z3JlU1FMIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gUkRTIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgY29udGFpbmVySW5zdGFuY2UgZGF0YWJhc2UKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgZGVwbG95bWVudE5vZGUgIkJ1Y2tldCIgIiIgIkFtYXpvbiBTMyIgewogICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gU2ltcGxlIFN0b3JhZ2UgU2VydmljZSIKICAgICAgICAgICAgICAgICAgICAgICAgY29udGFpbmVySW5zdGFuY2UgYXNzZXRzCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CgogICAgICAgICAgICBkbnMgLT4gbG9hZEJhbGFuY2VyICJGb3J3YXJkcyByZXF1ZXN0cyB0byIgIkhUVFBTIgogICAgICAgICAgICBsb2FkQmFsYW5jZXIgLT4gd2ViQXBwSW5zdGFuY2UgIkZvcndhcmRzIHJlcXVlc3RzIHRvIiAiSFRUUFMiCiAgICAgICAgfQogICAgfQoKICAgIHZpZXdzIHsKICAgICAgICBzeXN0ZW1Db250ZXh0IGJvb2tzdG9yZSAiQ29udGV4dCIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIGJvb2tzdG9yZSAiQ29udGFpbmVycyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgZGVwbG95bWVudCBib29rc3RvcmUgcHJvZHVjdGlvbiAiUHJvZHVjdGlvbiIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIGN5bGluZGVyCiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgIHRoZW1lIGFtYXpvbi13ZWItc2VydmljZXMtMjAyNS4wNwogICAgfQoKfQ==",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "configuration" : {
+      "styles" : {
+        "elements" : [ {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        } ]
+      },
+      "terminology" : { },
+      "themes" : [ "amazon-web-services-2025.07" ]
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Containers",
+      "name" : "Container View: Bookstore",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "6"
+      }, {
+        "id" : "8"
+      }, {
+        "id" : "9"
+      } ],
+      "softwareSystemId" : "2"
+    } ],
+    "deploymentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "environment" : "Production",
+      "key" : "Production",
+      "name" : "Deployment View: Bookstore - Production",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "20"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "25"
+      } ],
+      "softwareSystemId" : "2"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "Context",
+      "name" : "System Context View: Bookstore",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "7"
+      } ],
+      "softwareSystemId" : "2"
+    } ]
+  }
+}

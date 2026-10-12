@@ -101,6 +101,9 @@ jobs:
       - name: Validate microservices example
         run: scripts/validate-dsl.sh examples/microservices/workspace.dsl
 
+      - name: Validate aws-deployment example
+        run: scripts/validate-dsl.sh examples/aws-deployment/workspace.dsl
+
   e2e:
     name: End-to-end (init → validate → export → preview)
     runs-on: ubuntu-latest

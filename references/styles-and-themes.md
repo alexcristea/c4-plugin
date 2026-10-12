@@ -111,8 +111,8 @@ PlantUML/Mermaid exports may not honour line colours/styles.
 theme <name|url|file>
 ```
 
-- **By name**: must be installed on the renderer (Structurizr playground/local/server).
-- **By URL**: loaded dynamically when the workspace is rendered.
+- **By name**: must be installed on the renderer. The `structurizr/structurizr` image bundles the prebuilt cloud themes (AWS, Azure, Google Cloud, Kubernetes, Oracle), and the plugin's scripts enable them, so `theme amazon-web-services-2025.07` works. Names and tags: `deployment.md → Cloud infrastructure`.
+- **By URL**: loaded dynamically when the workspace is rendered. The old `https://static.structurizr.com/themes/...` URLs no longer resolve (cloud service EOL, 30 September 2026); validation fails if a theme can't be loaded.
 - **By file**: inlined into the workspace at parse time.
 
 ## `themes`

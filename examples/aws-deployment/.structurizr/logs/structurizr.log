@@ -1,0 +1,46 @@
+2026-10-12T06:21:29.037Z  INFO 1 --- [main] com.structurizr.server.Local             : ***********************************************************************************
+2026-10-12T06:21:29.043Z  INFO 1 --- [main] com.structurizr.server.Local             :   _____ _                   _              _          
+2026-10-12T06:21:29.043Z  INFO 1 --- [main] com.structurizr.server.Local             :  / ____| |                 | |            (_)         
+2026-10-12T06:21:29.044Z  INFO 1 --- [main] com.structurizr.server.Local             : | (___ | |_ _ __ _   _  ___| |_ _   _ _ __ _ _____ __ 
+2026-10-12T06:21:29.045Z  INFO 1 --- [main] com.structurizr.server.Local             :  \___ \| __| '__| | | |/ __| __| | | | '__| |_  / '__|
+2026-10-12T06:21:29.046Z  INFO 1 --- [main] com.structurizr.server.Local             :  ____) | |_| |  | |_| | (__| |_| |_| | |  | |/ /| |   
+2026-10-12T06:21:29.046Z  INFO 1 --- [main] com.structurizr.server.Local             : |_____/ \__|_|   \__,_|\___|\__|\__,_|_|  |_/___|_|   
+2026-10-12T06:21:29.046Z  INFO 1 --- [main] com.structurizr.server.Local             :                                                       
+2026-10-12T06:21:29.052Z  INFO 1 --- [main] com.structurizr.server.Local             : Local v2026.09.19
+2026-10-12T06:21:29.052Z  INFO 1 --- [main] com.structurizr.server.Local             : ***********************************************************************************
+2026-10-12T06:21:29.054Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.authentication: none
+2026-10-12T06:21:29.055Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.autorefreshinterval: 0
+2026-10-12T06:21:29.057Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.autosaveinterval: 5000
+2026-10-12T06:21:29.059Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.cache: none
+2026-10-12T06:21:29.060Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.data: file
+2026-10-12T06:21:29.061Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.datadirectory: /usr/local/structurizr
+2026-10-12T06:21:29.062Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.debug: false
+2026-10-12T06:21:29.063Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.editable: true
+2026-10-12T06:21:29.065Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.logging.filename: /usr/local/structurizr/.structurizr/logs/structurizr.log
+2026-10-12T06:21:29.065Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.network.timeout: 60000
+2026-10-12T06:21:29.066Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.network.urls.allowed: .*
+2026-10-12T06:21:29.066Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.search: lucene
+2026-10-12T06:21:29.067Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.themes: /usr/local/structurizr-themes
+2026-10-12T06:21:29.067Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.workspace.maxsize: 1MB
+2026-10-12T06:21:29.068Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.workspace.threads: 10
+2026-10-12T06:21:29.069Z  INFO 1 --- [main] com.structurizr.server.Local             :  - structurizr.workspaces: 1
+2026-10-12T06:21:29.069Z  INFO 1 --- [main] com.structurizr.server.Local             : ***********************************************************************************
+2026-10-12T06:21:29.069Z  INFO 1 --- [main] com.structurizr.server.Local             : Themes:
+2026-10-12T06:21:29.070Z  INFO 1 --- [main] com.structurizr.server.Local             :  - oracle-cloud-infrastructure-2023.04
+2026-10-12T06:21:29.070Z  INFO 1 --- [main] com.structurizr.server.Local             :  - kubernetes
+2026-10-12T06:21:29.071Z  INFO 1 --- [main] com.structurizr.server.Local             :  - oracle-cloud-infrastructure-2020.04
+2026-10-12T06:21:29.071Z  INFO 1 --- [main] com.structurizr.server.Local             :  - amazon-web-services-2023.01
+2026-10-12T06:21:29.072Z  INFO 1 --- [main] com.structurizr.server.Local             :  - oracle-cloud-infrastructure-2021.04
+2026-10-12T06:21:29.072Z  INFO 1 --- [main] com.structurizr.server.Local             :  - microsoft-azure-2024.07
+2026-10-12T06:21:29.073Z  INFO 1 --- [main] com.structurizr.server.Local             :  - microsoft-azure-2019.09
+2026-10-12T06:21:29.073Z  INFO 1 --- [main] com.structurizr.server.Local             :  - amazon-web-services-2025.07
+2026-10-12T06:21:29.074Z  INFO 1 --- [main] com.structurizr.server.Local             :  - microsoft-azure-2020.07
+2026-10-12T06:21:29.075Z  INFO 1 --- [main] com.structurizr.server.Local             :  - amazon-web-services-2022.04
+2026-10-12T06:21:29.076Z  INFO 1 --- [main] com.structurizr.server.Local             :  - microsoft-azure-2021.01
+2026-10-12T06:21:29.076Z  INFO 1 --- [main] com.structurizr.server.Local             :  - google-cloud-platform-v1.5
+2026-10-12T06:21:29.076Z  INFO 1 --- [main] com.structurizr.server.Local             :  - microsoft-azure-2023.01
+2026-10-12T06:21:29.076Z  INFO 1 --- [main] com.structurizr.server.Local             :  - microsoft-azure-2025.11
+2026-10-12T06:21:29.077Z  INFO 1 --- [main] com.structurizr.server.Local             :  - amazon-web-services-2020.04
+2026-10-12T06:21:29.077Z  INFO 1 --- [main] com.structurizr.server.Local             :  - google-cloud-platform-2025.09
+2026-10-12T06:21:29.077Z  INFO 1 --- [main] com.structurizr.server.Local             : ***********************************************************************************
+2026-10-12T06:21:50.525Z  WARN 1 --- [http-nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'workspaceId': Failed to convert value of type 'java.lang.String' to required type 'long'; For input string: "diagrams"]

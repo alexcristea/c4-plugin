@@ -164,9 +164,10 @@ for f in scripts/*.sh; do bash -n "$f"; done
 ```sh
 scripts/validate-dsl.sh examples/simple-web-app/workspace.dsl
 scripts/validate-dsl.sh examples/microservices/workspace.dsl
+scripts/validate-dsl.sh examples/aws-deployment/workspace.dsl
 ```
 
-Both must exit `0`.
+All must exit `0`.
 
 ### Run the end-to-end smoke test
 
