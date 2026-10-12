@@ -48,6 +48,16 @@ fail() {
   exit 1
 }
 
+# --- static checks -----------------------------------------------------------
+#
+# references/.upstream-sha records the structurizr.github.io commit the bundled
+# references were last synced against; scripts/update-references.sh diffs from it.
+
+UPSTREAM_SHA_FILE="${PLUGIN_ROOT}/references/.upstream-sha"
+if ! grep -qE '^[0-9a-f]{7,40}$' "$UPSTREAM_SHA_FILE" 2>/dev/null; then
+  fail "references/.upstream-sha is missing or not a commit SHA"
+fi
+
 # --- preflight ---------------------------------------------------------------
 
 if ! command -v docker >/dev/null 2>&1; then
