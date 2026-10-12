@@ -31,6 +31,7 @@ OUTPUT_DIR="${3:-build/diagrams}"
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "error: docker is not installed or not on PATH" >&2
+  echo "       install Docker Desktop or the Docker Engine, then re-run." >&2
   exit 127
 fi
 

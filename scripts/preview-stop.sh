@@ -9,7 +9,13 @@ CONTAINER_NAME="c4-architect-local"
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "error: docker is not installed or not on PATH" >&2
+  echo "       install Docker Desktop or the Docker Engine, then re-run." >&2
   exit 127
+fi
+
+if ! docker info >/dev/null 2>&1; then
+  echo "error: docker daemon is not running" >&2
+  exit 1
 fi
 
 if docker ps -a --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then

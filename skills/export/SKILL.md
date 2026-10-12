@@ -52,6 +52,7 @@ If the user wants raster/vector output, route them to one of:
 - Docker installed and running.
 - The script will create the output directory if it doesn't exist.
 - On Apple Silicon the script passes `--platform linux/amd64` automatically (the `structurizr/structurizr` image has no native ARM build).
+- The script passes `--user "$(id -u):$(id -g)"` so the container runs as the host user. The image defaults to a non-root uid (65532) that cannot write to the output directory on Linux; do not remove it.
 
 ## Verification
 

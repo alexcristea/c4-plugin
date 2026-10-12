@@ -73,8 +73,10 @@ fi
 # local) fail with AccessDeniedException unless the container runs as the host
 # user. Docker Desktop on macOS masks this, so instead of relying on the
 # filesystem we assert the flag directly: the shim rejects any `docker run`
-# of `export` or `local` that lacks --user <host uid>:<host gid>, then delegates
-# to the real docker. C4_DOCKER_SHIM_DRY=1 checks without running.
+# of the structurizr image that lacks --user <host uid>:<host gid>, then
+# delegates to the real docker. Read-only commands (validate) are held to the
+# same rule so every script runs the image the same way.
+# C4_DOCKER_SHIM_DRY=1 checks without running.
 
 REAL_DOCKER="$(command -v docker)"
 SHIM_DIR="${WORK_BASE}/bin"
@@ -83,14 +85,14 @@ cat > "${SHIM_DIR}/docker" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
 if [ "\${1:-}" = "run" ]; then
-  want="\$(id -u):\$(id -g)" user="" writes=0 prev=""
+  want="\$(id -u):\$(id -g)" user="" image=0 prev=""
   for arg in "\$@"; do
     [ "\$prev" = "--user" ] && user="\$arg"
-    case "\$arg" in --user=*) user="\${arg#--user=}" ;; export|local) writes=1 ;; esac
+    case "\$arg" in --user=*) user="\${arg#--user=}" ;; structurizr/structurizr) image=1 ;; esac
     prev="\$arg"
   done
-  if [ "\$writes" -eq 1 ] && [ "\$user" != "\$want" ]; then
-    echo "smoke: docker run writes to a bind mount but lacks --user \$want: \$*" >&2
+  if [ "\$image" -eq 1 ] && [ "\$user" != "\$want" ]; then
+    echo "smoke: docker run of structurizr/structurizr lacks --user \$want: \$*" >&2
     exit 1
   fi
   [ "\${C4_DOCKER_SHIM_DRY:-0}" = "1" ] && exit 0

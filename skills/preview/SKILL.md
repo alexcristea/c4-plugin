@@ -6,7 +6,7 @@ allowed-tools: Read, Bash(bash:*), Bash(docker:*), Bash(ls:*)
 
 # preview — live diagram preview at localhost:8080
 
-Runs Structurizr Local (`structurizr/structurizr local`) in Docker so the user can view the rendered workspace in a browser. The container watches the workspace directory and re-renders on save. On Apple Silicon, the script passes `--platform linux/amd64` because the image has no native ARM build.
+Runs Structurizr Local (`structurizr/structurizr local`) in Docker so the user can view the rendered workspace in a browser. The container watches the workspace directory and re-renders on save. On Apple Silicon, the script passes `--platform linux/amd64` because the image has no native ARM build. It also passes `--user "$(id -u):$(id -g)"` so the container runs as the host user and can write to the workspace directory on Linux (the image defaults to non-root uid 65532).
 
 ## Choosing between preview and export
 
