@@ -279,7 +279,7 @@ references/
 └── adrs-and-docs.md          # !docs, !adrs, Nygard template, doc structure
 ```
 
-The references are curated from the upstream [`structurizr/structurizr.github.io`](https://github.com/structurizr/structurizr.github.io) repository. Each file ends with a `# Source` footer pointing to the upstream URL and the date the content was pulled. Run `scripts/update-references.sh` to print a diff against the latest upstream.
+The references are curated from the upstream [`structurizr/structurizr.github.io`](https://github.com/structurizr/structurizr.github.io) repository. Each file ends with a `# Source` footer pointing to the upstream URL and the date the content was pulled. `references/.upstream-sha` records the upstream commit they were last synced against; run `scripts/update-references.sh` to list upstream DSL doc changes since then.
 
 ## Contributing
 

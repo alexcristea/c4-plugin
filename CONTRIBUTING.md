@@ -128,13 +128,19 @@ The eight files in `references/` are curated from [`structurizr/structurizr.gith
 scripts/update-references.sh
 ```
 
-The script downloads all 10 upstream source files that the bundled references are derived from:
+The script reads the baseline commit from `references/.upstream-sha`, asks the GitHub API for every commit touching `dsl/` since then (cookbook pages included), and prints each commit's `dsl/` patches. The patches are also saved to a temp directory that is kept after the run. If nothing changed, it prints `references/ are up to date with upstream dsl/.` Set `GITHUB_TOKEN` to avoid the unauthenticated rate limit.
 
-`03-basics.md`, `04-defaults.md`, `05-identifiers.md`, `06-archetypes.md`, `07-implied-relationships.md`, `08-expressions.md`, `31-includes.md`, `51-docs.md`, `52-adrs.md`, `71-language.md`
+It does **not** auto-apply changes. For each relevant patch:
 
-For files with a matching local copy (currently `basics.md` and `expressions.md`), it prints a `diff`. For the rest it prints the full upstream content as "NEW" — the raw material you use while hand-updating the curated references.
+1. Hand-merge the change into the matching curated file under `references/`.
+2. Update the `Pulled:` date (and the `# Source` list, if a new upstream page was used) in each affected file.
+3. Record the newest upstream commit the script printed:
 
-It does **not** auto-apply changes. Review the diff, hand-merge what's relevant into the curated references, update the `Pulled:` date in each affected file, and commit deliberately.
+   ```sh
+   echo <newest-sha> > references/.upstream-sha
+   ```
+
+4. Commit deliberately. `tests/smoke.sh` fails if `.upstream-sha` is missing or malformed.
 
 ## Testing locally
 
