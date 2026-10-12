@@ -49,7 +49,23 @@ deploymentNode <name> [description] [technology] [tags] [instances] {
 
 Default tags: `Element`, `Deployment Node`.
 
-Permitted children: `group`, `deploymentNode` (nested), `infrastructureNode`, `softwareSystemInstance`, `containerInstance`, `instanceOf`, `-> (relationship)`, `description`, `technology`, `instances`, `tags`, `url`, `properties`, `perspectives`.
+Permitted children: `group`, `deploymentGroup`, `deploymentNode` (nested), `infrastructureNode`, `softwareSystemInstance`, `containerInstance`, `instanceOf`, `-> (relationship)`, `description`, `technology`, `instances`, `tags`, `url`, `properties`, `perspectives`.
+
+`deploymentGroup <identifier>` inside a `deploymentNode` assigns that group to every instance nested under the node, instead of listing it on each `softwareSystemInstance`/`containerInstance`:
+
+```
+production = deploymentEnvironment "Production" {
+    serviceInstance1 = deploymentGroup "Service instance 1"
+
+    deploymentNode "Server 1" {
+        deploymentGroup serviceInstance1
+        containerInstance api
+        deploymentNode "Database Server" {
+            containerInstance database
+        }
+    }
+}
+```
 
 ## `infrastructureNode`
 
@@ -164,5 +180,6 @@ model {
 # Source
 
 - https://github.com/structurizr/structurizr.github.io/blob/main/dsl/71-language.md (deploymentEnvironment, deploymentGroup, deploymentNode, infrastructureNode, softwareSystemInstance, containerInstance, instanceOf, healthCheck, instances, deployment view)
+- https://github.com/structurizr/structurizr.github.io/blob/main/dsl/cookbook/deployment-groups/index.md (deployment groups set on deployment nodes)
 
-Pulled: 2026-05-12
+Pulled: 2026-10-12

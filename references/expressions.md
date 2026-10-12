@@ -21,6 +21,7 @@ Quote any expression that contains whitespace:
 | `element.technology==<technology>`               | elements with the given technology                                      |
 | `element.technology!=<technology>`               | elements without the given technology                                   |
 | `element.properties[<name>]==<value>`            | elements with the given property/value                                  |
+| `element.group==<name>`                          | elements in the given group                                             |
 | `element==-><identifier>`                        | the specified element (or group) plus afferent couplings                |
 | `element==<identifier>->`                        | the specified element (or group) plus efferent couplings                |
 | `element==-><identifier>->`                      | the specified element (or group) plus afferent and efferent couplings   |
@@ -76,4 +77,4 @@ container shop {
 
 - https://github.com/structurizr/structurizr.github.io/blob/main/dsl/08-expressions.md
 
-Pulled: 2026-05-12
+Pulled: 2026-10-12
