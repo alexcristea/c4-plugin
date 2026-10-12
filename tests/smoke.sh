@@ -85,7 +85,8 @@ fi
 # filesystem we assert the flag directly: the shim rejects any `docker run`
 # of the structurizr image that lacks --user <host uid>:<host gid>, then
 # delegates to the real docker. Read-only commands (validate) are held to the
-# same rule so every script runs the image the same way.
+# same rule so every script runs the image the same way. The shim also requires
+# -e STRUCTURIZR_THEMES=... so named cloud themes resolve in every command.
 # C4_DOCKER_SHIM_DRY=1 checks without running.
 
 REAL_DOCKER="$(command -v docker)"
@@ -95,14 +96,19 @@ cat > "${SHIM_DIR}/docker" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
 if [ "\${1:-}" = "run" ]; then
-  want="\$(id -u):\$(id -g)" user="" image=0 prev=""
+  want="\$(id -u):\$(id -g)" user="" image=0 themes=0 prev=""
   for arg in "\$@"; do
     [ "\$prev" = "--user" ] && user="\$arg"
+    [ "\$prev" = "-e" ] && [ "\$arg" = "STRUCTURIZR_THEMES=/usr/local/structurizr-themes" ] && themes=1
     case "\$arg" in --user=*) user="\${arg#--user=}" ;; structurizr/structurizr) image=1 ;; esac
     prev="\$arg"
   done
   if [ "\$image" -eq 1 ] && [ "\$user" != "\$want" ]; then
     echo "smoke: docker run of structurizr/structurizr lacks --user \$want: \$*" >&2
+    exit 1
+  fi
+  if [ "\$image" -eq 1 ] && [ "\$themes" -ne 1 ]; then
+    echo "smoke: docker run of structurizr/structurizr lacks -e STRUCTURIZR_THEMES: \$*" >&2
     exit 1
   fi
   [ "\${C4_DOCKER_SHIM_DRY:-0}" = "1" ] && exit 0

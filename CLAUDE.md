@@ -43,5 +43,5 @@ To try skills manually, install the plugin from a separate scratch directory (`/
 ## Conventions
 
 - SKILL.md frontmatter requires `name`, `description` (active voice), and `allowed-tools`. Always reference bundled files via `${CLAUDE_PLUGIN_ROOT}/...`.
-- Shell scripts: `#!/usr/bin/env bash` + `set -euo pipefail`. Exit codes: `127` for missing docker, `1` for a stopped daemon, `2` for a missing input file. Every `docker run` of the structurizr image uses `--platform linux/amd64` (no ARM build) and `--user "$(id -u):$(id -g)"` (the image's default uid can't write bind mounts on Linux).
+- Shell scripts: `#!/usr/bin/env bash` + `set -euo pipefail`. Exit codes: `127` for missing docker, `1` for a stopped daemon, `2` for a missing input file. Every `docker run` of the structurizr image uses `--platform linux/amd64` (no ARM build), `--user "$(id -u):$(id -g)"` (the image's default uid can't write bind mounts on Linux), and `-e STRUCTURIZR_THEMES=/usr/local/structurizr-themes` (enables bundled cloud themes by name; the smoke shim enforces both flags).
 - Behaviour changes update README or the relevant reference in the same change. History is not squashed.

@@ -50,6 +50,7 @@ docker run -d \
   --name "$CONTAINER_NAME" \
   --platform linux/amd64 \
   --user "$(id -u):$(id -g)" \
+  -e STRUCTURIZR_THEMES=/usr/local/structurizr-themes \
   -p "${PORT}:8080" \
   -v "${WORKSPACE_DIR_ABS}":/usr/local/structurizr \
   structurizr/structurizr local >/dev/null

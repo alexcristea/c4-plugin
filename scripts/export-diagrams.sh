@@ -53,6 +53,7 @@ OUTPUT_DIR_ABS="$(cd "$OUTPUT_DIR" && pwd)"
 
 docker run --rm --platform linux/amd64 \
   --user "$(id -u):$(id -g)" \
+  -e STRUCTURIZR_THEMES=/usr/local/structurizr-themes \
   -v "${WORKSPACE_DIR}:/usr/local/structurizr" \
   -v "${OUTPUT_DIR_ABS}:/usr/local/structurizr/out" \
   structurizr/structurizr \

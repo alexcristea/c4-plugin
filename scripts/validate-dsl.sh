@@ -12,6 +12,10 @@
 #
 # --user runs the container as the host user: the image defaults to a non-root
 # uid (65532) that cannot write to bind-mounted host dirs on Linux.
+#
+# STRUCTURIZR_THEMES enables the prebuilt cloud themes bundled in the image, so a
+# workspace can say `theme amazon-web-services-2025.07` (the hosted theme URLs on
+# static.structurizr.com went away with the cloud service EOL).
 
 set -euo pipefail
 
@@ -40,6 +44,7 @@ WORKSPACE_FILE="$(basename "$WORKSPACE")"
 
 docker run --rm --platform linux/amd64 \
   --user "$(id -u):$(id -g)" \
+  -e STRUCTURIZR_THEMES=/usr/local/structurizr-themes \
   -v "${WORKSPACE_DIR}:/usr/local/structurizr" \
   structurizr/structurizr \
   validate -w "/usr/local/structurizr/${WORKSPACE_FILE}"

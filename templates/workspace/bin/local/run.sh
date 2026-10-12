@@ -27,6 +27,7 @@ fi
 
 docker run -it --rm --platform linux/amd64 \
   --user "$(id -u):$(id -g)" \
+  -e STRUCTURIZR_THEMES=/usr/local/structurizr-themes \
   -p 8080:8080 \
   -v "${WORKSPACE_DIR}":/usr/local/structurizr \
   structurizr/structurizr local
