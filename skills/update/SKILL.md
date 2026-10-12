@@ -24,6 +24,7 @@ A single editing skill for **any** change to the C4 workspace: model, views, rel
    - "add a container view" → `views.md`, possibly `expressions.md`
    - "style external systems" → `styles-and-themes.md`
    - "add a deployment view" → `deployment.md`, `views.md`
+   - "show our AWS infrastructure" / "add AWS icons" → `deployment.md` (Cloud infrastructure), `styles-and-themes.md`
    - "write an ADR" → `adrs-and-docs.md`
 4. **Make the edit** with `Edit` (preferred) or `Write` (only for new files).
 5. **Auto-validate.** Immediately run `bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-dsl.sh <path-to-workspace.dsl>`.
@@ -52,7 +53,9 @@ When the user asks for a C4 model of an **existing** codebase, switch into disco
 2. **Map to C4 abstractions**:
    - One repo / one running service ≈ one **container**.
    - A monorepo with multiple deployables ≈ multiple **containers** within the same **softwareSystem**.
-   - External managed services (Stripe, Auth0, S3) ≈ separate **softwareSystem** with the `External` tag.
+   - Third-party SaaS you don't operate (Stripe, Auth0) ≈ separate **softwareSystem** with the `External` tag.
+   - Storage you provision (an S3 bucket, an RDS instance) ≈ a **container**, placed on a deployment node.
+   - Infrastructure-as-code (`terraform/**`, `pulumi/**`, `k8s/**`, `helm/**`) ≈ one **deploymentEnvironment** per environment, mapped with the rules in `deployment.md → Cloud infrastructure`.
    - Databases and queues ≈ **containers** of the system that owns them.
 3. **Propose** the model in DSL form, summarising the evidence (which file → which abstraction) **before** writing. Let the user confirm or adjust.
 4. **Write** the DSL and validate.
@@ -67,7 +70,7 @@ Stored at `${CLAUDE_PLUGIN_ROOT}/references/`:
 - `views.md` — all view types + `include`/`exclude`/`autoLayout`
 - `expressions.md` — `element.*` and `relationship.*` expressions
 - `styles-and-themes.md` — element/relationship styles, light/dark, themes, terminology
-- `deployment.md` — deployment environments, nodes, instances, health checks
+- `deployment.md` — deployment environments, nodes, instances, health checks; cloud mapping rules and AWS/Azure/GCP/Kubernetes themes
 - `adrs-and-docs.md` — `!docs`, `!adrs`, Nygard ADR template, doc structure, filenames
 
 Only read the files you actually need for the current request.

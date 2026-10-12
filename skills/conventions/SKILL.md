@@ -20,6 +20,7 @@ This file is the source of truth for our **project style** on top of valid DSL. 
 - **Descriptions are mandatory** on every `person`, `softwareSystem`, `container`, `component`. Aim for a single sentence describing what it *does*, not what it *is*.
 - **Technology** is mandatory on every container/component. Use canonical names: `Java`, `Spring Boot`, `Node.js`, `Postgres`, `Redis`, `Kafka`, `Next.js`. Not `JS`, `K8s`, or other abbreviations.
 - **External systems** get the `External` tag and a distinct style under `views { styles { ... } }` — see `${CLAUDE_PLUGIN_ROOT}/references/styles-and-themes.md`.
+- **Cloud elements** (deployment and infrastructure nodes) carry the provider's service name as `technology` (`"Amazon RDS for PostgreSQL"`) and, when a cloud theme is used, a tag copied exactly from the theme (`"Amazon Web Services - RDS"`). Reference themes by bundled name, never by `static.structurizr.com` URL — see `${CLAUDE_PLUGIN_ROOT}/references/deployment.md`.
 - Use `!identifiers hierarchical` only when names genuinely collide across systems; otherwise leave it flat (the default).
 
 ## Relationship conventions
