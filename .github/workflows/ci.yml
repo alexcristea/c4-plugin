@@ -11,7 +11,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install shellcheck
         run: sudo apt-get update && sudo apt-get install -y shellcheck
@@ -60,7 +60,7 @@ jobs:
     name: References sanity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Every reference has a # Source footer with a URL
         run: |
@@ -90,7 +90,7 @@ jobs:
     name: Smoke (validate examples)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Pull structurizr image
         run: docker pull structurizr/structurizr
@@ -108,7 +108,7 @@ jobs:
     name: End-to-end (init → validate → export → preview)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Pull structurizr image
         run: docker pull structurizr/structurizr
