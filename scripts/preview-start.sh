@@ -13,6 +13,9 @@
 #
 # Note: --platform linux/amd64 is required on Apple Silicon (ARM) Macs
 # because the image does not have a native ARM build.
+#
+# --user runs the container as the host user: the image defaults to a non-root
+# uid (65532) that cannot write to bind-mounted host dirs on Linux.
 
 set -euo pipefail
 
@@ -45,6 +48,7 @@ fi
 docker run -d \
   --name "$CONTAINER_NAME" \
   --platform linux/amd64 \
+  --user "$(id -u):$(id -g)" \
   -p "${PORT}:8080" \
   -v "${WORKSPACE_DIR_ABS}":/usr/local/structurizr \
   structurizr/structurizr local >/dev/null

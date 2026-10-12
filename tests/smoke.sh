@@ -66,6 +66,40 @@ if docker ps -a --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
   fail "a container named '$CONTAINER_NAME' already exists. Run scripts/preview-stop.sh first."
 fi
 
+# --- docker shim -------------------------------------------------------------
+#
+# The structurizr image runs as a non-root uid (65532). On Linux, bind-mounted
+# host dirs keep host ownership, so commands that write into the mount (export,
+# local) fail with AccessDeniedException unless the container runs as the host
+# user. Docker Desktop on macOS masks this, so instead of relying on the
+# filesystem we assert the flag directly: the shim rejects any `docker run`
+# of `export` or `local` that lacks --user <host uid>:<host gid>, then delegates
+# to the real docker. C4_DOCKER_SHIM_DRY=1 checks without running.
+
+REAL_DOCKER="$(command -v docker)"
+SHIM_DIR="${WORK_BASE}/bin"
+mkdir -p "$SHIM_DIR"
+cat > "${SHIM_DIR}/docker" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+if [ "\${1:-}" = "run" ]; then
+  want="\$(id -u):\$(id -g)" user="" writes=0 prev=""
+  for arg in "\$@"; do
+    [ "\$prev" = "--user" ] && user="\$arg"
+    case "\$arg" in --user=*) user="\${arg#--user=}" ;; export|local) writes=1 ;; esac
+    prev="\$arg"
+  done
+  if [ "\$writes" -eq 1 ] && [ "\$user" != "\$want" ]; then
+    echo "smoke: docker run writes to a bind mount but lacks --user \$want: \$*" >&2
+    exit 1
+  fi
+  [ "\${C4_DOCKER_SHIM_DRY:-0}" = "1" ] && exit 0
+fi
+exec "${REAL_DOCKER}" "\$@"
+EOF
+chmod +x "${SHIM_DIR}/docker"
+export PATH="${SHIM_DIR}:${PATH}"
+
 # --- helpers ----------------------------------------------------------------
 
 substitute_placeholders() {
@@ -104,6 +138,10 @@ run_init_flow() {
   if ! ls "${workspace_dir}/build/diagrams/"*.puml >/dev/null 2>&1; then
     fail "[$mode] no .puml files produced under ${workspace_dir}/build/diagrams/"
   fi
+
+  # run.sh is interactive (-it), so only check its docker invocation.
+  step "[$mode] check bin/local/run.sh docker invocation"
+  C4_DOCKER_SHIM_DRY=1 "${workspace_dir}/bin/local/run.sh"
 }
 
 run_preview_flow() {
