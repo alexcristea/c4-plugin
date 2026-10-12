@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# End-to-end smoke test for the c4-architect plugin's shell tooling and templates.
+# End-to-end smoke test for the c4 plugin's shell tooling and templates.
 #
 # What it tests
 # -------------

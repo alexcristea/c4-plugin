@@ -1,4 +1,4 @@
-# c4-architect
+# c4
 
 A Claude Code plugin for authoring [C4 architecture diagrams](https://c4model.com) as [Structurizr DSL](https://docs.structurizr.com/dsl), with Michael Nygard-style ADRs and supplementary docs alongside the model.
 

@@ -13,7 +13,7 @@ bin/local/run.sh     # convenience preview launcher
 
 ## Working with the model
 
-Edit via the `c4-architect` Claude Code plugin:
+Edit via the `c4` Claude Code plugin:
 
 | Task              | Command                          |
 |-------------------|----------------------------------|
