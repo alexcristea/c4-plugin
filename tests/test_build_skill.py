@@ -171,6 +171,14 @@ class BuildFailures(unittest.TestCase):
         with self.assertRaisesRegex(builder.BuildError, "conventions"):
             builder.build(self.repo, self.out)
 
+    def test_python_bytecode_cache_not_shipped(self):
+        # Importing build-skill.py (as these tests do) writes scripts/__pycache__/.
+        cache = self.repo / "scripts/__pycache__"
+        cache.mkdir(exist_ok=True)
+        (cache / "build-skill.cpython-312.pyc").write_bytes(b"\x00\xff\x00")
+        builder.build(self.repo, self.out)
+        self.assertFalse((self.out / "scripts/__pycache__").exists())
+
     def test_binary_asset_fails(self):
         (self.repo / "templates/workspace/logo.png").write_bytes(b"\x89PNG\r\n\x1a\n\x00\xff")
         with self.assertRaisesRegex(builder.BuildError, "logo.png"):

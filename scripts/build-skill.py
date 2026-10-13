@@ -99,8 +99,13 @@ def render_router(repo: pathlib.Path, sources: dict[str, str]) -> str:
     return router.replace("\n---\n", f'\nmetadata:\n  version: "{version}"\n---\n', 1)
 
 
+# Local clutter, never part of the package. __pycache__ appears under scripts/
+# as soon as anything imports build-skill.py (the tests do).
+JUNK = {"__pycache__", ".DS_Store"}
+
+
 def shipped(path: pathlib.Path, rel: pathlib.PurePath) -> bool:
-    return path.is_file() and rel.as_posix() not in EXCLUDED and rel.name != ".DS_Store"
+    return path.is_file() and rel.as_posix() not in EXCLUDED and not JUNK & set(rel.parts)
 
 
 def copy_assets(repo: pathlib.Path, out: pathlib.Path) -> None:
