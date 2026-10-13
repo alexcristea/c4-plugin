@@ -40,6 +40,12 @@ def main() -> None:
           f"({sum(r['correct'] for r in rows) / len(rows):.0%})")
     if errs:
         print(f"warning: {len(errs)} session(s) errored or timed out")
+    # Single-skill runs: `c4` fired but no workflow file was read before the
+    # stream ended. These show as "(none)" below but are a dispatch miss, not
+    # a trigger miss.
+    undispatched = [r for r in rows if r["skills"] == ["c4"]]
+    if undispatched:
+        print(f"note: {len(undispatched)} session(s) invoked `c4` but read no workflow")
     print()
 
     # Confusion matrix: rows = expected, cols = what actually fired.

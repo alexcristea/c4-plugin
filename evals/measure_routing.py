@@ -14,8 +14,16 @@ overrides the installed copy with the working tree -- and record which c4 skill
 Claude reaches for. One run per query exercises all six skills at once, so the
 result is a routing confusion matrix rather than six isolated yes/no answers.
 
+With --single-skill DIR it measures the built single-skill package instead
+(scripts/build-skill.py): the package is installed as a project skill in a copy
+of the workdir, every installed c4 plugin is disabled for the session, and the
+"fired" workflow is the first workflows/<name>.md Claude reads (Read or cat) after invoking
+the `c4` skill. Same query pool, same output shape, so report_routing.py can
+--compare the two.
+
 Usage:
   python3 evals/measure_routing.py [--runs 1] [--workers 5] [--out results.json]
+  python3 evals/measure_routing.py --single-skill dist/skill/c4 --out single.json
 """
 
 from __future__ import annotations
@@ -25,7 +33,10 @@ import concurrent.futures as cf
 import json
 import os
 import pathlib
+import re
+import shutil
 import subprocess
+import tempfile
 import sys
 import time
 
@@ -38,6 +49,10 @@ TIMEOUT = int(os.environ.get("C4_EVAL_TIMEOUT", "240"))
 # checkout to get a before/after -- the query pool always comes from REPO so both
 # runs are scored against the same questions.
 PLUGIN_DIR = REPO
+# Set by --single-skill: measure the built package instead of the plugin.
+SINGLE_SKILL = False
+# Absolute or relative: Claude often `cd`s into the skill dir and cats workflows/x.md.
+WORKFLOW_READ = re.compile(r"(?<![\w-])workflows/([a-z]+)\.md\b")
 
 
 def load_pool() -> list[tuple[str, str | None]]:
@@ -66,8 +81,8 @@ def run_query(query: str, workdir: pathlib.Path) -> dict:
         "claude", "-p", query,
         "--output-format", "stream-json", "--verbose",
         "--model", MODEL,
-        "--plugin-dir", str(PLUGIN_DIR),
-    ]
+    ] + (single_skill_args() if SINGLE_SKILL else ["--plugin-dir", str(PLUGIN_DIR)])
+    scan = scan_single if SINGLE_SKILL else scan_plugin
     # CLAUDECODE would make the nested CLI refuse to start; safe for a subprocess.
     env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
     started = time.time()
@@ -88,13 +103,7 @@ def run_query(query: str, workdir: pathlib.Path) -> dict:
             except json.JSONDecodeError:
                 continue
             if event.get("type") == "assistant":
-                for item in event.get("message", {}).get("content", []):
-                    if item.get("type") == "tool_use" and item.get("name") == "Skill":
-                        name = item.get("input", {}).get("skill", "")
-                        # Other plugins' skills may legitimately fire; ignore them.
-                        if name.startswith("c4:") and name not in skills:
-                            skills.append(name)
-                if skills:
+                if scan(tool_uses(event), skills):
                     break  # routing decided
             elif event.get("type") == "result":
                 if event.get("is_error"):
@@ -110,6 +119,70 @@ def run_query(query: str, workdir: pathlib.Path) -> dict:
             "seconds": round(time.time() - started, 1)}
 
 
+def tool_uses(event: dict) -> list[dict]:
+    content = event.get("message", {}).get("content", [])
+    return [item for item in content if item.get("type") == "tool_use"]
+
+
+def scan_plugin(uses: list[dict], skills: list[str]) -> bool:
+    """Record c4:* skill invocations; routing is decided once one fires."""
+    for item in uses:
+        name = item.get("input", {}).get("skill", "") if item.get("name") == "Skill" else ""
+        # Other plugins' skills may legitimately fire; ignore them.
+        if name.startswith("c4:") and name not in skills:
+            skills.append(name)
+    return bool(skills)
+
+
+def workflow_read(item: dict) -> str | None:
+    """The workflow name if this tool use loads workflows/<name>.md.
+
+    Claude reads it with Read or with `cat` through Bash, about equally often.
+    """
+    inp = item.get("input", {})
+    target = {"Read": inp.get("file_path", ""), "Bash": inp.get("command", "")}.get(item.get("name"), "")
+    match = WORKFLOW_READ.search(target)
+    return match.group(1) if match else None
+
+
+def scan_single(uses: list[dict], skills: list[str]) -> bool:
+    """Record `c4`, then the first workflow it reads as `c4:<workflow>`.
+
+    Routing inside a single skill happens when Claude picks a workflow file, so
+    the decision is the first workflows/<name>.md Read after the skill fires.
+    """
+    for item in uses:
+        if not skills:
+            skills.extend(["c4"] if item.get("input", {}).get("skill") == "c4" else [])
+        elif workflow := workflow_read(item):
+            skills.append(f"c4:{workflow}")
+            return True
+    return False
+
+
+def single_skill_args() -> list[str]:
+    """Disable every installed c4 plugin so only the project skill can answer."""
+    settings = pathlib.Path.home() / ".claude" / "settings.json"
+    enabled = json.loads(settings.read_text()).get("enabledPlugins", {}) if settings.exists() else {}
+    off = {name: False for name in enabled if name.split("@", 1)[0] == "c4"}
+    return ["--settings", json.dumps({"enabledPlugins": off})]
+
+
+def stage_single_skill(skill_dir: pathlib.Path, workdir: pathlib.Path | None) -> pathlib.Path:
+    """Copy workdir (or start empty, for None) to a temp dir with the package as .claude/skills/c4/."""
+    staged = pathlib.Path(tempfile.mkdtemp(prefix="c4-single-skill-")) / "ws"
+    if workdir:
+        shutil.copytree(workdir, staged, ignore=shutil.ignore_patterns(".git"))
+    shutil.copytree(skill_dir, staged / ".claude" / "skills" / "c4", dirs_exist_ok=True)
+    return staged
+
+
+def fired_workflow(skills: list[str]) -> str | None:
+    """The routed-to workflow: the first c4:<name> entry, or None."""
+    named = [s for s in skills if ":" in s]
+    return named[0].split(":", 1)[1] if named else None
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", type=int, default=1, help="runs per query")
@@ -121,28 +194,45 @@ def main() -> None:
     ap.add_argument("--plugin-dir", default=str(REPO),
                     help="plugin tree to measure (default: this repo). Point at an "
                          "older checkout to get a before/after comparison.")
+    ap.add_argument("--single-skill", metavar="DIR",
+                    help="measure a built single-skill package (scripts/build-skill.py) "
+                         "instead of the plugin")
     args = ap.parse_args()
 
-    global PLUGIN_DIR
+    global PLUGIN_DIR, SINGLE_SKILL
     PLUGIN_DIR = pathlib.Path(args.plugin_dir).resolve()
+    SINGLE_SKILL = bool(args.single_skill)
 
     workdir = pathlib.Path(args.workdir).resolve()
+    skill_dir = pathlib.Path(args.single_skill).resolve() if SINGLE_SKILL else None
+    if SINGLE_SKILL:
+        workdir = stage_single_skill(skill_dir, workdir)
+
+    def workdir_for(expected: str | None) -> pathlib.Path:
+        # The single skill checks the filesystem before picking a workflow, and
+        # its dispatch rule sends "set up C4" to update when workspace.dsl exists
+        # (scaffolding would overwrite it). Score structurize queries where they
+        # make sense: a fresh, empty dir each, so parallel sessions can't see
+        # each other's scaffolding. The plugin picks its skill from the
+        # description before looking, so it keeps the shared workdir.
+        return stage_single_skill(skill_dir, None) if SINGLE_SKILL and expected == "structurize" else workdir
     pool = load_pool()
     jobs = [(q, exp, r) for q, exp in pool for r in range(args.runs)]
     print(f"{len(pool)} queries x {args.runs} run(s) = {len(jobs)} sessions, "
           f"{args.workers} at a time, cwd={workdir}", flush=True)
-    print(f"measuring plugin: {PLUGIN_DIR}", flush=True)
+    print(f"measuring {'single skill: ' + args.single_skill if SINGLE_SKILL else f'plugin: {PLUGIN_DIR}'}",
+          flush=True)
 
     results = []
     done = 0
     with cf.ThreadPoolExecutor(max_workers=args.workers) as pool_exec:
-        futures = {pool_exec.submit(run_query, q, workdir): (q, exp)
+        futures = {pool_exec.submit(run_query, q, workdir_for(exp)): (q, exp)
                    for q, exp, _ in jobs}
         for fut in cf.as_completed(futures):
             q, expected = futures[fut]
             rec = fut.result()
             rec["expected"] = expected
-            rec["fired"] = rec["skills"][0].split(":", 1)[1] if rec["skills"] else None
+            rec["fired"] = fired_workflow(rec["skills"])
             rec["correct"] = rec["fired"] == expected
             results.append(rec)
             done += 1
