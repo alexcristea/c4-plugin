@@ -4,9 +4,9 @@
 Single-skill hosts take one SKILL.md plus bundled files, not a plugin with six
 skills. This turns the plugin into that shape without forking it:
 
-  skill/SKILL.md            -> SKILL.md (router; gets the "Choosing between" sections)
+  templates/skill/SKILL.md  -> SKILL.md (router; gets the "Choosing between" sections)
   skills/<name>/SKILL.md    -> workflows/<name>.md (frontmatter stripped, paths rewritten)
-  references/, scripts/, templates/ -> copied verbatim
+  references/, scripts/, templates/ -> copied verbatim (minus the router source)
 
 The output names no publishing platform; upload the directory wherever a
 single skill is accepted. Fails rather than shipping a package with dangling
@@ -28,8 +28,10 @@ from dataclasses import dataclass
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SKILLS = ["structurize", "update", "validate", "export", "preview", "conventions"]
 ASSET_DIRS = ["references", "scripts", "templates"]
-# Maintainer-only tooling; meaningless to someone who installed the skill.
-EXCLUDED = {"scripts/update-references.sh", "scripts/build-skill.py", "references/.upstream-sha"}
+ROUTER = "templates/skill/SKILL.md"
+# Maintainer-only tooling; meaningless to someone who installed the skill. The
+# router source is rendered into SKILL.md, so a verbatim copy would be a stray duplicate.
+EXCLUDED = {"scripts/update-references.sh", "scripts/build-skill.py", "references/.upstream-sha", ROUTER}
 MARKER = "<!-- choosing-between -->"
 
 FRONTMATTER = re.compile(r"\A---\n.*?\n---\n", re.DOTALL)
@@ -89,9 +91,9 @@ def to_workflow(source: str) -> str:
 
 
 def render_router(repo: pathlib.Path, sources: dict[str, str]) -> str:
-    router = (repo / "skill" / "SKILL.md").read_text()
+    router = (repo / ROUTER).read_text()
     if MARKER not in router:
-        raise BuildError(f"skill/SKILL.md: missing {MARKER} placeholder")
+        raise BuildError(f"{ROUTER}: missing {MARKER} placeholder")
     sections = [s.strip() for name in SKILLS for s in CHOOSING.findall(sources[name])]
     router = router.replace(MARKER, "\n\n".join(sections))
     version = json.loads((repo / ".claude-plugin" / "plugin.json").read_text())["version"]

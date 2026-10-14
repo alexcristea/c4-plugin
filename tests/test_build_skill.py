@@ -135,6 +135,10 @@ class BuiltPackage(unittest.TestCase):
         self.assertFalse((self.out / "scripts/update-references.sh").exists())
         self.assertFalse((self.out / "references/.upstream-sha").exists())
 
+    def test_router_source_not_shipped(self):
+        # The router template lives under templates/ but is rendered to SKILL.md, not copied.
+        self.assertEqual([self.out / "SKILL.md"], list(self.out.rglob("SKILL.md")))
+
     def test_stats_match_package(self):
         files = [p for p in self.out.rglob("*") if p.is_file()]
         self.assertEqual(self.stats.files, len(files))
@@ -185,7 +189,7 @@ class BuildFailures(unittest.TestCase):
             builder.build(self.repo, self.out)
 
     def test_router_without_marker_fails(self):
-        path = self.repo / "skill/SKILL.md"
+        path = self.repo / "templates/skill/SKILL.md"
         path.write_text(path.read_text().replace("<!-- choosing-between -->", ""))
         with self.assertRaisesRegex(builder.BuildError, "choosing-between"):
             builder.build(self.repo, self.out)
