@@ -22,6 +22,9 @@ jobs:
       - name: Shellcheck templates/
         run: shellcheck templates/workspace/bin/local/run.sh
 
+      - name: Single-skill build
+        run: python3 tests/test_build_skill.py
+
       - name: Validate plugin manifest
         run: |
           python3 - <<'PY'

@@ -15,6 +15,8 @@ python3 tests/check-doc-headings.py                            # template docs s
 scripts/validate-dsl.sh examples/simple-web-app/workspace.dsl  # validate one workspace (needs Docker)
 tests/smoke.sh                                                 # end-to-end: template → validate → export → preview (needs Docker)
 scripts/update-references.sh                                   # list upstream Structurizr DSL doc changes since references/.upstream-sha
+python3 scripts/build-skill.py                                 # package the plugin as one skill in dist/skill/c4/
+python3 tests/test_build_skill.py                              # single-skill build tests (CI)
 ```
 
 `tests/smoke.sh` refuses to run if a `c4-preview` container exists; `C4_SMOKE_PORT` overrides its port (default 8081). It installs a `docker` shim on `PATH` that fails any `docker run structurizr/structurizr` lacking `--user $(id -u):$(id -g)`.
@@ -24,7 +26,11 @@ To measure which skill fires for which phrasing (slow — runs `claude -p` per q
 ```sh
 python3 evals/build_trigger_evals.py
 python3 evals/measure_routing.py --runs 1 --workdir /path/to/scratch/c4/workspace
+python3 evals/measure_routing.py --runs 1 --single-skill dist/skill/c4 --workdir /path/to/scratch/c4/workspace --out single.json
+python3 evals/report_routing.py single.json --compare routing-results.json
 ```
+
+`--single-skill` measures the built package. It copies the workdir to a temp dir, installs the package as a project skill there, and disables installed `c4@*` plugins. A query counts as routed to the first `workflows/<name>.md` Claude reads (with `Read` or `cat`, absolute or relative path) after invoking `c4`. Structurize queries run in a fresh empty dir each: the single skill looks before it dispatches, and correctly picks `update` when `workspace.dsl` already exists.
 
 To try skills manually, install the plugin from a separate scratch directory (`/plugin install --plugin-dir <abs path>`), then `/plugin reload c4` after editing a `SKILL.md`. Edits to `references/*.md` need no reload.
 
@@ -37,6 +43,8 @@ To try skills manually, install the plugin from a separate scratch directory (`/
 **Descriptions are the routing mechanism.** Only the frontmatter `description` is seen when Claude picks a skill, so trigger phrases must live there, never in a `## When to run` body section. Sibling disambiguation goes under `## Choosing between <a> and <b>`. The main risk is the wrong sibling firing (e.g. export vs preview), not a skill failing to fire. Use the routing evals above when changing any description.
 
 **References are curated excerpts, not mirrors.** `references/*.md` are hand-condensed from `structurizr/structurizr.github.io/dsl`. Skills load only the files they need (index in `skills/update/SKILL.md`). Each file needs a one-sentence purpose line, a `# Source` footer with upstream URL(s) and `Pulled: YYYY-MM-DD` (CI checks for the footer), and copy-paste-valid DSL examples. After syncing upstream changes by hand, write the newest upstream SHA to `references/.upstream-sha`.
+
+**One plugin, one single-skill build.** `scripts/build-skill.py` turns the plugin into `dist/skill/c4/` for hosts that take one skill: `templates/skill/SKILL.md` is the router (the build fills `<!-- choosing-between -->` with the skills' `## Choosing between` sections and stamps `metadata.version` from `plugin.json`), and each `skills/<name>/SKILL.md` becomes `workflows/<name>.md` with `${CLAUDE_PLUGIN_ROOT}` → `${CLAUDE_SKILL_DIR}` and `/c4:x` → `c4 x`. Plugin-only sentences that a mechanical rewrite can't fix go in `PATCHES`, and the build fails if a patch target disappears. Keep `references/` and `templates/` free of `/c4:` commands, because they're copied verbatim. The build is platform-agnostic, and publishing isn't scripted.
 
 **One template, two layouts.** `structurize` copies `templates/workspace/` to `.` (standalone, empty dir) or `architecture/` (embedded, existing project), substituting `{{PROJECT_NAME}}` and `{{TODAY}}`. A freshly scaffolded workspace must validate immediately.
 

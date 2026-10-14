@@ -170,7 +170,7 @@ Put the provider's service name in `technology` (`"Amazon RDS for PostgreSQL"`, 
 
 ### Cloud themes (icons and colours)
 
-The `structurizr/structurizr` image bundles prebuilt themes. The plugin's scripts enable them with `-e STRUCTURIZR_THEMES=/usr/local/structurizr-themes`, so reference them **by name**:
+The `structurizr/structurizr` image bundles prebuilt themes. The bundled scripts enable them with `-e STRUCTURIZR_THEMES=/usr/local/structurizr-themes`, so reference them **by name**:
 
 ```
 views {
@@ -212,7 +212,7 @@ Other bundled themes (tag prefix in brackets; tag sets differ between versions, 
 - Kubernetes: `kubernetes` (`Kubernetes - `)
 - Oracle Cloud: `oracle-cloud-infrastructure-2023.04` (`Oracle Cloud Infrastructure - `)
 
-Older dated versions (e.g. `amazon-web-services-2023.01`) are bundled too. Icons render in `/c4:preview` and the static HTML export; PlantUML/Mermaid exports drop them (see `styles-and-themes.md`).
+Older dated versions (e.g. `amazon-web-services-2023.01`) are bundled too. Icons render in the live preview and the static HTML export; PlantUML/Mermaid exports drop them (see `styles-and-themes.md`).
 
 ## Example
 

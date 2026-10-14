@@ -13,16 +13,16 @@ bin/local/run.sh     # convenience preview launcher
 
 ## Working with the model
 
-Edit via the `c4` Claude Code plugin:
+Edit by asking Claude Code, with the `c4` plugin or skill installed:
 
-| Task              | Command                          |
-|-------------------|----------------------------------|
-| Edit the model    | `/c4:update "describe change"`   |
-| Validate          | `/c4:validate`                   |
-| Preview in browser| `/c4:preview`                    |
-| Export diagrams   | `/c4:export plantuml`            |
+| Task               | Example request                                 |
+|--------------------|-------------------------------------------------|
+| Edit the model     | "add a Redis cache in front of the API"         |
+| Validate           | "is the workspace valid?"                       |
+| Preview in browser | "preview the diagrams"                          |
+| Export diagrams    | "export the diagrams as PlantUML"               |
 
-Without the plugin, run `bin/local/run.sh` and open <http://localhost:8080>. You can also use the official Structurizr CLI directly — see the [plugin README](https://github.com/alexcristea/c4-plugin) for details.
+Without Claude Code, run `bin/local/run.sh` and open <http://localhost:8080>. You can also use the official Structurizr CLI directly — see the [c4 README](https://github.com/alexcristea/c4-plugin) for details.
 
 ## Why this lives in version control
 

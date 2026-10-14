@@ -53,6 +53,23 @@ In a Claude Code session:
 /plugin install --plugin-dir /absolute/path/to/c4-plugin
 ```
 
+### As a single skill
+
+Some skill marketplaces and hosts accept one skill, not a plugin. `scripts/build-skill.py` packages the plugin as one self-contained `c4` skill:
+
+```sh
+python3 scripts/build-skill.py   # writes dist/skill/c4/
+```
+
+The package has a router `SKILL.md` (from `templates/skill/SKILL.md`), the six skills as `workflows/<name>.md`, and copies of `references/`, `scripts/`, and `templates/`. Bundled paths use `${CLAUDE_SKILL_DIR}`, and the frontmatter only uses keys every skill host accepts. To install it in Claude Code, copy `dist/skill/c4/` to `.claude/skills/c4/` (one project) or `~/.claude/skills/c4/` (all projects). To publish it, upload that directory to the marketplace of your choice. The repo has no publish command.
+
+Compared with the plugin, the single skill:
+
+- has no `/c4:*` slash commands — ask in prose ("validate the workspace");
+- grants the union of the six skills' tools to every workflow;
+- loads the house style by an instruction in `SKILL.md` instead of `paths:` scoping;
+- relies on one description to fire and a dispatch table to pick the workflow. It routes about as accurately as the plugin, but it fires more readily on nearby non-C4 requests (`evals/measure_routing.py --single-skill` measures both).
+
 ## Quickstart
 
 In an empty directory:

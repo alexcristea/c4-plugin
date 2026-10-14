@@ -1,3 +1,10 @@
 .DS_Store
 .idea/
 __pycache__/
+dist/
+
+# Structurizr preview/export output when running the examples
+examples/*/.structurizr/
+examples/*/workspace.json
+examples/*/out/
+examples/*/build/
